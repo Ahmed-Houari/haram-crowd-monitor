@@ -1,0 +1,760 @@
+{
+  "ref_size": [1920, 1080],
+  "graphics_mask": [
+    [
+      [96, 65],
+      [461, 65],
+      [461, 173],
+      [96, 173]
+    ],
+    [
+      [1651, 43],
+      [1843, 43],
+      [1843, 248],
+      [1651, 248]
+    ],
+    [
+      [38, 940],
+      [1862, 940],
+      [1862, 1080],
+      [38, 1080]
+    ]
+  ],
+  "views": [
+    {
+      "id": "cam0_mataf_low",
+      "survey_cluster": "C00",
+      "source_thumb": "data/views/survey/cluster_00_a.jpg",
+      "ref_image": "data/views/refs/cam0_mataf_low.png",
+      "zoom_tolerance": 0.1,
+      "zones": {
+        "mataf_ground": [
+          [192, 448],
+          [192, 411],
+          [746, 411],
+          [749, 570],
+          [1127, 569],
+          [1129, 411],
+          [1681, 411],
+          [1656, 904],
+          [217, 907]
+        ]
+      },
+      "zones_base": "ref",
+      "quality": "ok",
+      "quality_note": "density zoom test 2026-10-24: same-patch drift <= 10 % for zoom 0.90-1.69; synthetic count test 3.6 % over 0.90-1.10 (user decision 2026-10-23)",
+      "references": [
+        {
+          "id": "cam0_mataf_low@evening-20261024T1349Z",
+          "image": "data/views/refs/extra/cam0_mataf_low__evening_20261024T134939Z.png",
+          "period": "evening",
+          "status": "pending",
+          "from_ref": "primary",
+          "inliers": 29,
+          "zoom": 0.9835,
+          "captured_utc": "2026-10-24T13:49:39+00:00",
+          "zones": {
+            "mataf_ground": [
+              [252, 445],
+              [252, 409],
+              [787, 409],
+              [790, 565],
+              [1162, 565],
+              [1165, 409],
+              [1722, 409],
+              [1688, 899],
+              [282, 885]
+            ]
+          },
+          "checks": {
+            "inliers": 29,
+            "zone_frac": 0.308,
+            "in_safe_area": true,
+            "graphics_overlap": 0.0,
+            "kaaba_overlap": null,
+            "empty_block": null,
+            "solidity": null,
+            "wall_frac": null,
+            "count": 2030.6,
+            "density": 31.79,
+            "zoom_drift": 0.031,
+            "failed": [
+              "weak match (29 inliers < 30)"
+            ]
+          },
+          "preview": "data/views/previews/cam0_mataf_low__evening-20261024T1349Z.jpg"
+        },
+        {
+          "id": "cam0_mataf_low@evening-20261024T1421Z",
+          "image": "data/views/refs/extra/cam0_mataf_low__evening_20261024T142121Z.png",
+          "period": "evening",
+          "status": "approved",
+          "from_ref": "primary",
+          "H_from_primary": [
+            [
+              0.97140446,
+              -0.0216487,
+              53.64382022
+            ],
+            [
+              -0.00311714,
+              0.98361639,
+              5.00816015
+            ],
+            [
+              -1.22e-05,
+              -1.583e-05,
+              1.0
+            ]
+          ],
+          "inliers": 45,
+          "zoom": 1.0076,
+          "captured_utc": "2026-10-24T14:21:21+00:00",
+          "zones": {
+            "mataf_ground": [
+              [233, 449],
+              [233, 412],
+              [782, 413],
+              [783, 574],
+              [1163, 574],
+              [1165, 414],
+              [1724, 415],
+              [1701, 921],
+              [249, 912]
+            ]
+          },
+          "checks": {
+            "inliers": 45,
+            "zone_frac": 0.3286,
+            "in_safe_area": true,
+            "graphics_overlap": 0.0,
+            "kaaba_overlap": null,
+            "empty_block": null,
+            "solidity": null,
+            "wall_frac": null,
+            "count": 2109.9,
+            "density": 30.97,
+            "zoom_drift": 0.038,
+            "failed": [],
+            "soft": []
+          },
+          "preview": "data/views/previews/cam0_mataf_low__evening-20261024T1421Z.jpg"
+        },
+        {
+          "id": "cam0_mataf_low@day-20261026T0858Z",
+          "image": "data/views/refs/extra/cam0_mataf_low__day_20261026T085807Z.png",
+          "period": "day",
+          "status": "approved",
+          "from_ref": "cam0_mataf_low@evening-20261024T1421Z",
+          "H_from_primary": [
+            [
+              1.00201673,
+              -0.02082013,
+              -4.55565809
+            ],
+            [
+              0.00246445,
+              0.994265,
+              13.72483278
+            ],
+            [
+              1.06e-06,
+              -2.157e-05,
+              1.00070338
+            ]
+          ],
+          "inliers": 42,
+          "zoom": 1.0131,
+          "captured_utc": "2026-10-26T08:58:07+00:00",
+          "zones": {
+            "mataf_ground": [
+              [198, 929],
+              [192, 782],
+              [192, 426],
+              [740, 427],
+              [742, 589],
+              [1125, 588],
+              [1126, 428],
+              [1682, 429],
+              [1664, 929]
+            ]
+          },
+          "checks": {
+            "inliers": 42,
+            "zone_frac": 0.3291,
+            "in_safe_area": true,
+            "graphics_overlap": 0.0,
+            "kaaba_overlap": null,
+            "empty_block": null,
+            "solidity": null,
+            "wall_frac": null,
+            "count": 1006.1,
+            "density": 14.74,
+            "zoom_drift": 0.019,
+            "failed": [],
+            "soft": []
+          },
+          "preview": "data/views/previews/cam0_mataf_low__day-20261026T0858Z.jpg"
+        }
+      ],
+      "zoom_min": 0.9,
+      "zoom_max": 1.692,
+      "zoom_test": "data/views/2d/synthetic_density.json (2026-10-24)"
+    },
+    {
+      "id": "cam1_mataf_wide",
+      "survey_cluster": "C19",
+      "source_thumb": "data/views/survey/cluster_19_a.jpg",
+      "ref_image": "data/views/refs/cam1_mataf_wide.png",
+      "zoom_tolerance": 0.05,
+      "zones": {
+        "mataf_ground": [
+          [192, 929],
+          [192, 374],
+          [318, 350],
+          [1110, 343],
+          [1113, 569],
+          [1500, 563],
+          [1502, 317],
+          [1696, 315],
+          [1683, 908],
+          [897, 929]
+        ]
+      },
+      "zones_base": "ref",
+      "quality": "ok",
+      "quality_note": "quality ok (user decision 2026-10-24); density zoom test 2026-10-24: same-patch drift <= 10 % for zoom 0.95-1.30",
+      "zoom_min": 0.95,
+      "zoom_max": 1.304,
+      "zoom_test": "data/views/2d/synthetic_density.json (2026-10-24)",
+      "references": [
+        {
+          "id": "cam1_mataf_wide@day-20261025T1215Z",
+          "image": "data/views/refs/extra/cam1_mataf_wide__day_20261025T121509Z.png",
+          "period": "day",
+          "status": "pending",
+          "from_ref": "primary",
+          "H_from_primary": [
+            [
+              0.96706665,
+              -0.00327629,
+              24.03330534
+            ],
+            [
+              0.00086273,
+              0.95763461,
+              4.08696864
+            ],
+            [
+              1.43e-06,
+              -1.283e-05,
+              1.0
+            ]
+          ],
+          "inliers": 29,
+          "zoom": 0.9707,
+          "captured_utc": "2026-10-25T12:15:09+00:00",
+          "zones": {
+            "mataf_ground": [
+              [209, 904],
+              [209, 364],
+              [332, 341],
+              [1099, 334],
+              [1105, 553],
+              [1480, 547],
+              [1478, 310],
+              [1666, 308],
+              [1664, 883],
+              [898, 904]
+            ]
+          },
+          "checks": {
+            "inliers": 29,
+            "zone_frac": 0.358,
+            "in_safe_area": true,
+            "graphics_overlap": 0.0,
+            "kaaba_overlap": null,
+            "empty_block": null,
+            "solidity": null,
+            "wall_frac": null,
+            "count": 1617.8,
+            "density": 21.79,
+            "zoom_drift": 0.051,
+            "failed": [
+              "weak match (29 inliers < 30)"
+            ],
+            "soft": []
+          },
+          "preview": "data/views/previews/cam1_mataf_wide__day-20261025T1215Z.jpg"
+        },
+        {
+          "id": "cam1_mataf_wide@evening-20261025T1414Z",
+          "image": "data/views/refs/extra/cam1_mataf_wide__evening_20261025T141425Z.png",
+          "period": "evening",
+          "status": "approved",
+          "from_ref": "primary",
+          "H_from_primary": [
+            [
+              0.97436766,
+              -0.01237673,
+              53.5068236
+            ],
+            [
+              0.00502385,
+              0.96487998,
+              47.13201605
+            ],
+            [
+              1.3e-07,
+              -1.55e-06,
+              1.0
+            ]
+          ],
+          "inliers": 34,
+          "zoom": 0.9706,
+          "captured_utc": "2026-10-25T14:14:25+00:00",
+          "zones": {
+            "mataf_ground": [
+              [230, 929],
+              [236, 409],
+              [359, 387],
+              [1131, 384],
+              [1132, 602],
+              [1509, 598],
+              [1514, 361],
+              [1703, 360],
+              [1684, 929]
+            ]
+          },
+          "checks": {
+            "inliers": 34,
+            "zone_frac": 0.346,
+            "in_safe_area": true,
+            "graphics_overlap": 0.0,
+            "kaaba_overlap": null,
+            "empty_block": null,
+            "solidity": null,
+            "wall_frac": null,
+            "count": 2235.3,
+            "density": 31.16,
+            "zoom_drift": 0.084,
+            "failed": [],
+            "soft": []
+          },
+          "preview": "data/views/previews/cam1_mataf_wide__evening-20261025T1414Z.jpg"
+        },
+        {
+          "id": "cam1_mataf_wide@day-20261026T0554Z",
+          "image": "data/views/refs/extra/cam1_mataf_wide__day_20261026T055440Z.png",
+          "period": "day",
+          "status": "pending",
+          "from_ref": "cam1_mataf_wide@evening-20261025T1414Z",
+          "H_from_primary": [
+            [
+              0.96387143,
+              -0.00022811,
+              83.25510277
+            ],
+            [
+              0.00569957,
+              0.9524661,
+              10.41501859
+            ],
+            [
+              3.41e-06,
+              8.32e-06,
+              1.00066128
+            ]
+          ],
+          "inliers": 27,
+          "zoom": 0.9463,
+          "captured_utc": "2026-10-26T05:54:40+00:00",
+          "zones": {
+            "mataf_ground": [
+              [266, 888],
+              [267, 366],
+              [388, 344],
+              [1145, 341],
+              [1145, 554],
+              [1513, 549],
+              [1518, 318],
+              [1702, 317],
+              [1682, 873],
+              [937, 890]
+            ]
+          },
+          "checks": {
+            "inliers": 27,
+            "zone_frac": 0.338,
+            "in_safe_area": true,
+            "graphics_overlap": 0.0,
+            "kaaba_overlap": null,
+            "empty_block": null,
+            "solidity": null,
+            "wall_frac": null,
+            "count": 1472.4,
+            "density": 21.01,
+            "zoom_drift": 0.132,
+            "failed": [
+              "weak match (27 inliers < 30)",
+              "count drifts 13 % over zoom 0.9-1.1 (> 10 %; people too small?)"
+            ],
+            "soft": [
+              "count drifts 13 % over zoom 0.9-1.1 (> 10 %; people too small?)"
+            ]
+          },
+          "preview": "data/views/previews/cam1_mataf_wide__day-20261026T0554Z.jpg"
+        }
+      ]
+    },
+    {
+      "id": "cam5_roof",
+      "survey_cluster": "C18",
+      "source_thumb": "data/views/survey/cluster_18_a.jpg",
+      "ref_image": "data/views/refs/cam5_roof.png",
+      "zoom_tolerance": 0.05,
+      "zones": {
+        "mataf_ground": [
+          [192, 929],
+          [192, 426],
+          [315, 371],
+          [613, 324],
+          [791, 311],
+          [795, 666],
+          [1031, 663],
+          [1028, 309],
+          [1205, 307],
+          [1461, 327],
+          [1637, 413],
+          [1678, 502],
+          [1542, 646],
+          [1406, 770],
+          [1250, 871],
+          [1113, 928],
+          [1110, 929]
+        ]
+      },
+      "zones_base": "ref",
+      "quality": "low",
+      "quality_note": "density depends on zoom (the model finds more people when they look bigger: about +9 % at 1.15x, -8 % at 0.97x); accepted zoom 0.967-1.157 keeps it within 10 %",
+      "zoom_min": 0.967,
+      "zoom_max": 1.157,
+      "zoom_test": "data/views/2d/synthetic_density.json (2026-10-24)",
+      "references": [
+        {
+          "id": "cam5_roof@evening-20261025T1448Z",
+          "image": "data/views/refs/extra/cam5_roof__evening_20261025T144810Z.png",
+          "period": "evening",
+          "status": "pending",
+          "from_ref": "primary",
+          "H_from_primary": [
+            [
+              0.96580796,
+              -0.01363414,
+              46.90356601
+            ],
+            [
+              0.0024471,
+              0.96443168,
+              25.38348468
+            ],
+            [
+              -1.07e-06,
+              -1.145e-05,
+              1.0
+            ]
+          ],
+          "inliers": 29,
+          "zoom": 0.9756,
+          "captured_utc": "2026-10-25T14:48:10+00:00",
+          "zones": {
+            "mataf_ground": [
+              [222, 929],
+              [228, 439],
+              [348, 386],
+              [637, 341],
+              [810, 329],
+              [813, 675],
+              [1043, 673],
+              [1040, 327],
+              [1212, 326],
+              [1461, 346],
+              [1633, 430],
+              [1673, 518],
+              [1541, 658],
+              [1409, 779],
+              [1256, 878],
+              [1135, 929]
+            ]
+          },
+          "checks": {
+            "inliers": 29,
+            "zone_frac": 0.3191,
+            "in_safe_area": true,
+            "graphics_overlap": 0.0,
+            "kaaba_overlap": null,
+            "empty_block": null,
+            "solidity": null,
+            "wall_frac": null,
+            "count": 2155.5,
+            "density": 32.58,
+            "zoom_drift": 0.244,
+            "failed": [
+              "weak match (29 inliers < 30)",
+              "count drifts 24 % over zoom 0.9-1.1 (> 10 %; people too small?)"
+            ],
+            "soft": [
+              "count drifts 24 % over zoom 0.9-1.1 (> 10 %; people too small?)"
+            ]
+          },
+          "preview": "data/views/previews/cam5_roof__evening-20261025T1448Z.jpg"
+        },
+        {
+          "id": "cam5_roof@day-20261027T0316Z",
+          "image": "data/views/refs/extra/cam5_roof__day_20261027T031655Z.png",
+          "period": "day",
+          "status": "approved",
+          "from_ref": "primary",
+          "quality": "low",
+          "quality_note": "approved despite: count drifts 34 % over zoom 0.9-1.1 (> 10 %; people too small?)",
+          "H_from_primary": [
+            [
+              0.96009802,
+              -0.01250071,
+              75.63397265
+            ],
+            [
+              0.00478218,
+              0.96386084,
+              40.19621615
+            ],
+            [
+              -5.23e-06,
+              -4.85e-06,
+              1.0
+            ]
+          ],
+          "inliers": 41,
+          "zoom": 0.9729,
+          "captured_utc": "2026-10-27T03:16:55+00:00",
+          "zones": {
+            "mataf_ground": [
+              [250, 929],
+              [255, 453],
+              [375, 401],
+              [663, 357],
+              [836, 346],
+              [837, 691],
+              [1066, 690],
+              [1066, 345],
+              [1238, 345],
+              [1488, 366],
+              [1660, 451],
+              [1699, 538],
+              [1566, 678],
+              [1432, 798],
+              [1279, 895],
+              [1196, 929]
+            ]
+          },
+          "checks": {
+            "inliers": 41,
+            "zone_frac": 0.311,
+            "in_safe_area": true,
+            "graphics_overlap": 0.0,
+            "kaaba_overlap": null,
+            "empty_block": null,
+            "solidity": null,
+            "wall_frac": null,
+            "count": 2345.8,
+            "density": 36.38,
+            "zoom_drift": 0.345,
+            "failed": [
+              "count drifts 34 % over zoom 0.9-1.1 (> 10 %; people too small?)"
+            ],
+            "soft": [
+              "count drifts 34 % over zoom 0.9-1.1 (> 10 %; people too small?)"
+            ]
+          },
+          "preview": "data/views/previews/cam5_roof__day-20261027T0316Z.jpg"
+        },
+        {
+          "id": "cam5_roof@evening-20261027T1336Z",
+          "image": "data/views/refs/extra/cam5_roof__evening_20261027T133602Z.png",
+          "period": "evening",
+          "status": "pending",
+          "from_ref": "cam5_roof@day-20261027T0316Z",
+          "H_from_primary": [
+            [
+              0.955848,
+              0.00771247,
+              55.08235948
+            ],
+            [
+              -3.595e-05,
+              0.96785417,
+              2.76947999
+            ],
+            [
+              -1.824e-05,
+              1.34e-05,
+              0.99972228
+            ]
+          ],
+          "inliers": 25,
+          "zoom": 0.9767,
+          "captured_utc": "2026-10-27T13:36:02+00:00",
+          "zones": {
+            "mataf_ground": [
+              [244, 894],
+              [241, 414],
+              [359, 362],
+              [648, 319],
+              [822, 307],
+              [825, 651],
+              [1056, 651],
+              [1056, 306],
+              [1232, 305],
+              [1488, 327],
+              [1664, 413],
+              [1704, 501],
+              [1565, 641],
+              [1427, 760],
+              [1271, 855],
+              [1135, 908],
+              [1132, 909]
+            ]
+          },
+          "checks": {
+            "inliers": 25,
+            "zone_frac": 0.3186,
+            "in_safe_area": true,
+            "graphics_overlap": 0.0,
+            "kaaba_overlap": null,
+            "empty_block": null,
+            "solidity": null,
+            "wall_frac": null,
+            "count": 2720.4,
+            "density": 41.18,
+            "zoom_drift": 0.278,
+            "failed": [
+              "weak match (25 inliers < 30)",
+              "count drifts 28 % over zoom 0.9-1.1 (> 10 %; people too small?)"
+            ],
+            "soft": [
+              "count drifts 28 % over zoom 0.9-1.1 (> 10 %; people too small?)"
+            ]
+          },
+          "preview": "data/views/previews/cam5_roof__evening-20261027T1336Z.jpg"
+        }
+      ]
+    },
+    {
+      "id": "cam6_mataf_low_b",
+      "label": "Low camera B",
+      "status": "approved",
+      "source_thumb": "data/views/thumbs/unmatched/20261024T072633Z.jpg",
+      "ref_image": "data/views/refs/cam6_mataf_low_b.png",
+      "zoom_tolerance": 0.05,
+      "zones": {
+        "mataf_ground": [
+          [1235, 630],
+          [1162, 628],
+          [1161, 590],
+          [1084, 590],
+          [1079, 515],
+          [994, 515],
+          [988, 388],
+          [746, 430],
+          [274, 421],
+          [192, 451],
+          [192, 927],
+          [661, 920],
+          [693, 846],
+          [771, 844],
+          [774, 886],
+          [899, 886],
+          [975, 850],
+          [1098, 865],
+          [1098, 797],
+          [1073, 794],
+          [1087, 722],
+          [1233, 709]
+        ]
+      },
+      "zones_base": "ref",
+      "quality": "untested",
+      "quality_note": "discover_views group 3: low Mataf view, Kaaba centre-left, seen by day (10 thumbnails, 5 hours); added 2026-10-24 by scripts/discover_views.py, waiting for review",
+      "auto_checks": {
+        "inliers": 182,
+        "zone_frac": 0.209,
+        "in_safe_area": true,
+        "graphics_overlap": 0.0,
+        "kaaba_overlap": 0.0,
+        "empty_block": 0.0048,
+        "solidity": 0.899,
+        "wall_frac": 0.0004,
+        "count": 904.8,
+        "density": 20.88,
+        "zoom_drift": 0.059,
+        "failed": [],
+        "soft": []
+      },
+      "preview": "data/views/previews/cam6_mataf_low_b.jpg",
+      "zoom_min": 0.95,
+      "zoom_max": 2.0,
+      "zoom_test": "data/views/2d/zoom_cam6_mataf_low_b.json"
+    },
+    {
+      "id": "cam7_mataf_low_c",
+      "label": "Low camera C",
+      "status": "approved",
+      "source_thumb": "data/views/thumbs/unmatched/20261023T230148Z.jpg",
+      "ref_image": "data/views/refs/cam7_mataf_low_c.png",
+      "zoom_tolerance": 0.05,
+      "zones": {
+        "mataf_ground": [
+          [1727, 379],
+          [1460, 347],
+          [1445, 595],
+          [1084, 567],
+          [966, 524],
+          [947, 397],
+          [688, 355],
+          [195, 413],
+          [195, 910],
+          [1723, 927]
+        ]
+      },
+      "zones_base": "ref",
+      "quality": "untested",
+      "quality_note": "discover_views group 6: low Mataf view, Kaaba centre, seen at night (7 thumbnails, 5 hours); added 2026-10-24 by scripts/discover_views.py, waiting for review",
+      "auto_checks": {
+        "inliers": 175,
+        "zone_frac": 0.3543,
+        "in_safe_area": true,
+        "graphics_overlap": 0.0,
+        "kaaba_overlap": null,
+        "empty_block": 0.0036,
+        "solidity": 0.863,
+        "wall_frac": 0.0,
+        "count": 1812.9,
+        "density": 24.67,
+        "zoom_drift": 0.075,
+        "failed": [],
+        "soft": []
+      },
+      "preview": "data/views/previews/cam7_mataf_low_c.jpg",
+      "zoom_min": 0.95,
+      "zoom_max": 1.828,
+      "zoom_test": "data/views/2d/zoom_cam7_mataf_low_c.json"
+    }
+  ],
+  "thumbnails": {
+    "note": "Opt-in survey thumbnails (user request 2026-10-23), 480x270 JPEG, saved by collect_crowd.py until until_utc",
+    "until_utc": "2026-10-25T21:00:00+00:00",
+    "unmatched_every_min": 5,
+    "night_matched_max_per_view": 12,
+    "night_matched_every_min": 5
+  }
+}

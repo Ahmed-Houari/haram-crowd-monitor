@@ -1,0 +1,175 @@
+/* The main dashboard since 2026-11-01 (user redesign, option A): the night world of styles.css (teal-black ground,
+   marble text, Kiswa gold for the mark and controls), three things on the main screen, no paragraphs. The four level colours are
+   the only state colours; level words use the lifted text tones (>= 4.5:1 on the ground). */
+.calm {
+  --lvt-quiet: #3cc2ae; --lvt-busy: #e6c04f; --lvt-crowded: #ff7f57; --lvt-packed: #f58bbd;
+  --stage: #0c181a;
+  min-height: 100vh; display: flex; flex-direction: column;
+  font: 14px/1.5 var(--f-ui);
+}
+.calm h1, .calm h2, .calm h3, .calm p { margin: 0; }
+:lang(ar) .calm, .calm:lang(ar) { font-family: var(--f-ui); }
+
+/* top bar: name, live state, language, details */
+.cbar { display: flex; align-items: center; gap: 22px; padding: 12px 26px; border-bottom: 1px solid var(--line); }
+.cbrand { display: flex; align-items: center; gap: 11px; }
+.cbrand svg { width: 30px; height: 30px; flex: none; }
+.cbrand h1 { font: 500 16px/1.3 var(--f-ui); }
+:lang(en) .cbrand h1, .calm:lang(en) .cbrand h1 { font: 500 16px/1.2 var(--f-num); letter-spacing: -0.01em; }
+.state { display: flex; align-items: center; gap: 9px; color: var(--mute); font-size: 13px; }
+.state i { width: 8px; height: 8px; border-radius: 50%; background: var(--mute); flex: none; }
+.state b { font-weight: 600; color: var(--text); }
+.state.on i { background: var(--teal); box-shadow: 0 0 0 3px rgba(79, 179, 168, 0.18); }
+.state.on b { color: var(--teal-text); }
+.state.stale i { background: var(--amber); } .state.stale b { color: #f7c05a; }
+.state.off i { background: var(--red); } .state.off b { color: #ff8796; }
+.cctl { margin-inline-start: auto; display: flex; gap: 8px; }
+.ctl { display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 0 14px; border-radius: 999px; cursor: pointer;
+  background: transparent; border: 1px solid var(--line2); font-size: 13px; transition: border-color 0.2s var(--ease), background 0.2s var(--ease); }
+.ctl:hover { border-color: rgba(200, 164, 92, 0.6); }
+.ctl.lang { border-color: rgba(200, 164, 92, 0.45); color: var(--gold-text); }
+.ctl.det svg { transition: transform 0.25s var(--ease); }
+.ctl.det.open { background: rgba(200, 164, 92, 0.12); border-color: rgba(200, 164, 92, 0.55); }
+.ctl.det.open svg { transform: rotate(180deg); }
+
+/* titles: one short line with its (i) */
+.ttl { display: flex; align-items: center; gap: 6px; font: 500 15px/1.3 var(--f-ui); color: var(--text); opacity: 0.86; }
+.ttl.small { font-size: 13.5px; color: var(--mute); opacity: 1; }
+.calm:lang(en) .ttl { font-family: var(--f-ui); font-weight: 500; }
+
+/* (i): a small round button; the bubble opens under it */
+.info { position: relative; display: inline-flex; }
+.info-btn { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; border: 0; background: transparent;
+  color: var(--mute); cursor: pointer; transition: color 0.2s var(--ease), background 0.2s var(--ease); }
+.info-btn:hover, .info-btn[aria-expanded="true"] { color: var(--gold-text); background: rgba(200, 164, 92, 0.12); }
+.info-pop { position: absolute; top: calc(100% + 6px); inset-inline-start: -8px; z-index: 20; width: max-content; max-width: 300px;
+  display: flex; flex-direction: column; gap: 5px; padding: 12px 34px 12px 14px; border-radius: 12px; background: #172a2d;
+  border: 1px solid var(--line2); box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45); font: 400 13px/1.5 var(--f-ui); color: var(--text);
+  animation: pop-in 0.22s var(--ease) both; }
+[dir="rtl"] .info-pop { padding: 12px 14px 12px 34px; }
+.info-x { position: absolute; top: 8px; inset-inline-end: 8px; display: grid; place-items: center; width: 22px; height: 22px;
+  border: 0; border-radius: 50%; background: transparent; color: var(--mute); cursor: pointer; }
+.info-x:hover { color: var(--text); }
+@keyframes pop-in { from { opacity: 0; transform: translateY(-4px); } }
+
+/* the answer: a word in its level colour, where it sits on the four, about how many people */
+.now { display: flex; flex-direction: column; gap: 10px; }
+.word { font: 500 clamp(56px, 6.4vw, 104px)/1.05 var(--f-ar); letter-spacing: 0; margin-top: 4px; }
+.calm:lang(en) .word { font: 300 clamp(50px, 5.6vw, 92px)/1.02 var(--f-num); letter-spacing: -0.03em; }
+.word.lv-quiet { color: var(--lvt-quiet); } .word.lv-busy { color: var(--lvt-busy); }
+.word.lv-crowded { color: var(--lvt-crowded); } .word.lv-packed { color: var(--lvt-packed); }
+.word.off { color: #9aa6a6; font-size: clamp(40px, 4.4vw, 68px); }
+.word.wait { color: var(--mute); font-size: 22px; }
+.meter { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; align-items: end; width: min(260px, 100%); height: 12px; }
+.meter i { height: 5px; border-radius: 3px; opacity: 0.28; }
+.meter i.on { height: 12px; opacity: 1; }
+.meter .quiet { background: var(--lv-quiet); } .meter .busy { background: var(--lv-busy); }
+.meter .crowded { background: var(--lv-crowded); } .meter .packed { background: var(--lv-packed); }
+.people { font-size: 17px; color: var(--text); margin-top: 4px; }
+.people .n { font: 400 26px/1.2 var(--f-num); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; margin-inline-end: 4px; }
+.people.dim { color: var(--mute); font-size: 15px; }
+
+/* the trend: six hourly blocks in the level colours (the fill hues, as the meter), the hour under each; no lines */
+.trend { display: flex; flex-direction: column; gap: 8px; }
+.hours { position: relative; }
+.hours ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
+.hours li { display: flex; flex-direction: column; align-items: center; gap: 5px; min-width: 0; touch-action: manipulation; }
+.hours li i { display: block; width: 100%; height: 34px; border-radius: 6px; transition: filter 0.2s var(--ease); }
+.hours li:hover i { filter: brightness(1.15); }
+.hours .quiet { background: var(--lv-quiet); } .hours .busy { background: var(--lv-busy); }
+.hours .crowded { background: var(--lv-crowded); } .hours .packed { background: var(--lv-packed); }
+.hours .none { background: rgba(196, 202, 202, 0.1); box-shadow: inset 0 0 0 1px var(--line2); }
+.hours li span { color: var(--mute); font-size: 11.5px; white-space: nowrap; }
+.hours li span.cur { color: var(--text); }
+.hours .tip { position: absolute; top: -6px; transform: translate(-50%, -100%); white-space: nowrap; padding: 3px 8px; border-radius: 7px;
+  background: #172a2d; border: 1px solid var(--line2); font-size: 12px; pointer-events: none; z-index: 5; }
+
+/* the next prayer and the best time to go (as on /simple), side by side; stacked when the column is narrow */
+.soon { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 18px 22px; }
+.soon .cell { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.soon .ttl { margin-bottom: 2px; }
+.soon .pline { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.soon .pname { font: 500 26px/1.2 var(--f-ar); }
+.calm:lang(en) .soon .pname { font: 500 22px/1.2 var(--f-ui); }
+.soon .ptime { font: 400 16px/1.2 var(--f-num); font-variant-numeric: tabular-nums; color: var(--text); }
+.soon .count { font-size: 14px; color: var(--mute); }
+.soon .best-l:first-child { flex-basis: 100%; } /* the label on its own line in the narrow cell */
+.soon .count b { font: 500 21px/1.2 var(--f-num); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; color: var(--gold-text);
+  margin-inline-start: 4px; }
+.soon .lvl { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; }
+.soon .lvl i { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.soon .sub { color: var(--mute); font-size: 13px; }
+
+/* the twin's stage */
+.stage { position: relative; min-height: 520px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line);
+  background: radial-gradient(ellipse 70% 62% at 50% 54%, #12262a 0%, #0c1719 58%, #0a1315 100%); }
+.calm .stage .twin-canvas { inset: 0; }
+.stage .on-stage { position: absolute; top: 12px; inset-inline-start: 16px; z-index: 4; }
+/* the colour key in a corner, on a faint plate so it reads where it meets the model */
+.stage .lvkey { position: absolute; bottom: 14px; inset-inline-start: 16px; z-index: 4; padding: 10px 12px; border-radius: 10px;
+  background: rgba(10, 19, 21, 0.72); border: 1px solid var(--line); }
+
+/* the video */
+.video { display: flex; flex-direction: column; gap: 8px; }
+.cframe { border: 1px solid var(--line); }
+.cframe .badge { inset-inline-start: 10px; left: auto; top: 10px; }
+[dir="ltr"] .cframe .badge { left: 10px; }
+
+/* a side column (answer, trend, video) | the twin */
+.cmain { flex: 1; display: grid; grid-template-columns: minmax(330px, 0.95fr) minmax(0, 2fr); gap: 22px; padding: 20px 26px; min-height: 0; }
+.col.side { display: flex; flex-direction: column; gap: 26px; min-width: 0; }
+.col.side .video { margin-top: auto; }
+.cmain .stage { min-height: min(78vh, 740px); }
+
+/* the roads: the map under the main screen, a plain key in the map's three colours and grey for closed */
+.croads { display: flex; flex-direction: column; gap: 10px; padding: 4px 26px 22px; }
+.croads .calm-map { min-height: 400px; }
+.roadkey { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 20px; font-size: 13px; color: var(--text); }
+.roadkey li { display: inline-flex; align-items: center; gap: 8px; }
+.roadkey i { width: 22px; height: 4px; border-radius: 2px; }
+.roadkey .free { background: #3fa56a; } .roadkey .slow { background: #f28a1e; } .roadkey .jam { background: #e8384f; }
+.roadkey .closed { background: #7a828c; }
+
+/* details: the engineer's view, closed by default */
+.details { display: flex; flex-direction: column; gap: 18px; padding: 4px 26px 22px; border-top: 1px solid var(--line); margin-top: 4px;
+  animation: pop-in 0.3s var(--ease) both; }
+.drow { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; padding-top: 18px; }
+.drow.two { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); }
+.drow.one { grid-template-columns: minmax(0, 1fr); }
+.dblock h3 { font: 500 14px/1.3 var(--f-ui); margin-bottom: 8px; }
+.dblock .m2 bdi { unicode-bidi: isolate; }
+.dblock .m2 { font-size: 13px; margin-bottom: 8px; }
+.dblock .m2 b { font-size: 18px; font-weight: 400; }
+.dblock .camchips { position: static; }
+.twin-key { list-style: none; padding: 0; margin: 10px 0 0; display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: var(--mute); }
+.twin-key i { display: inline-block; width: 14px; height: 10px; border-radius: 2px; margin-inline-end: 6px; vertical-align: -1px; }
+.twin-key .k-flat { background: var(--lv-busy); }
+.twin-key .k-hatch { background: repeating-linear-gradient(135deg, var(--lv-quiet) 0 3px, #9fd8cf 3px 4px); }
+.twin-key .k-none { background: rgba(196, 202, 202, 0.2); }
+.calm-map { position: relative; min-height: 360px; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); }
+.details .see { min-width: 0; }
+
+.cfoot { padding: 10px 26px 16px; color: var(--mute); font-size: 12px; }
+
+/* phones: one column; the answer first */
+@media (max-width: 1100px) and (min-width: 761px) {
+  .cmain { grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.5fr); }
+}
+@media (max-width: 760px) {
+  .cbar { flex-wrap: wrap; gap: 10px 14px; padding: 10px 16px; }
+  .cbrand h1 { font-size: 15px; }
+  .state { order: 3; width: 100%; font-size: 12.5px; }
+  .ctl { min-height: 36px; padding: 0 12px; }
+  .cmain { grid-template-columns: minmax(0, 1fr); padding: 14px 16px; gap: 18px; }
+  .cmain .stage { min-height: 380px; }
+  .col.side { display: contents; }
+  .now { order: 1; } .trend { order: 2; } .soon { order: 3; } .cmain .stage { order: 4; } .col.side .video { order: 5; margin-top: 0; }
+  .stage .lvkey { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 6px 14px; inset-inline: 8px; bottom: 8px; padding: 7px 10px; }
+  .drow, .drow.two { grid-template-columns: minmax(0, 1fr); }
+  .details, .cfoot, .croads { padding-inline: 16px; }
+  .croads .calm-map { min-height: 320px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .info-pop, .details { animation: none; }
+  .ctl, .ctl.det svg, .info-btn, .hours li i { transition: none; }
+}

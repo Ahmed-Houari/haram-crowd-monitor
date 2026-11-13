@@ -1,0 +1,320 @@
+{
+ "cam0_mataf_low": {
+  "chosen": {
+   "f": 1553.2,
+   "rvec": [
+    1.6202657,
+    -0.9475923,
+    0.7443011
+   ],
+   "tvec": [
+    -0.3723,
+    0.4993,
+    61.921
+   ],
+   "size": [
+    1920,
+    1080
+   ],
+   "centre_m": [
+    -52.16,
+    -29.69,
+    15.27
+   ],
+   "distance_m": 60.0,
+   "f_kaaba_fit": 2733.8,
+   "f_kaaba_range": [
+    1281.6,
+    3152.2
+   ],
+   "f_selfcal": 1553.2,
+   "selfcal_frames": 14,
+   "selfcal_ptz_err": 0.027,
+   "rms_px": 2.63,
+   "iou": 0.922,
+   "calibrated_utc": "2026-10-24T17:34:31+00:00",
+   "method": "Kaaba silhouette fit; focal length from pan/tilt/zoom self-calibration on matched thumbnails",
+   "orientation_fix": "pose fitted again (focal length fixed) from starts around the Kaaba; chosen by silhouette and landmarks {'mizab_px': 24.8, 'mizab_facing': True, 'door_gold': None, 'hijr_v': 0.357, 'corner_px': 4.5}",
+   "previous": {
+    "rvec": [
+     0.4989167,
+     2.2253573,
+     -1.7594467
+    ],
+    "tvec": [
+     -0.9135,
+     0.1263,
+     63.6107
+    ],
+    "centre_m": [
+     25.08,
+     56.53,
+     14.91
+    ]
+   }
+  },
+  "solutions": [
+   {
+    "centre_m": [
+     -52.16,
+     -29.69,
+     15.27
+    ],
+    "rvec": [
+     1.620265698988167,
+     -0.947592283813941,
+     0.7443010824750125
+    ],
+    "tvec": [
+     -0.3722540461357817,
+     0.49933407881061914,
+     61.921038622155464
+    ],
+    "f": 1553.1999999999998,
+    "rms_px": 2.63,
+    "iou": 0.922,
+    "mizab_px": 24.8,
+    "mizab_facing": true,
+    "door_gold": null,
+    "hijr_v": 0.357,
+    "corner_px": 4.5
+   },
+   {
+    "centre_m": [
+     -52.51,
+     -27.57,
+     14.81
+    ],
+    "rvec": [
+     1.5975513869196882,
+     -0.9779328864678669,
+     0.7635169219202936
+    ],
+    "tvec": [
+     -0.26444467982461345,
+     0.6488136001657889,
+     61.13110810005836
+    ],
+    "f": 1553.1999999999998,
+    "rms_px": 2.6,
+    "iou": 0.923,
+    "mizab_px": 22.4,
+    "mizab_facing": true,
+    "door_gold": null,
+    "hijr_v": 0.357,
+    "corner_px": 12.4
+   },
+   {
+    "centre_m": [
+     -52.14,
+     -30.48,
+     13.72
+    ],
+    "rvec": [
+     1.5963430987873524,
+     -0.9319921958339157,
+     0.7366933648478335
+    ],
+    "tvec": [
+     -0.28737050394765906,
+     0.47272129699699417,
+     61.93197637359048
+    ],
+    "f": 1553.1999999999998,
+    "rms_px": 2.7,
+    "iou": 0.926,
+    "mizab_px": 29.9,
+    "mizab_facing": true,
+    "door_gold": null,
+    "hijr_v": 0.348,
+    "corner_px": 5.3
+   },
+   {
+    "centre_m": [
+     -51.8,
+     -31.83,
+     15.46
+    ],
+    "rvec": [
+     1.634726358981606,
+     -0.9199174584101782,
+     0.7206607026766071
+    ],
+    "tvec": [
+     -0.4070627196283001,
+     0.3178386933652275,
+     62.729695122445584
+    ],
+    "f": 1553.1999999999998,
+    "rms_px": 2.88,
+    "iou": 0.923,
+    "mizab_px": 28.7,
+    "mizab_facing": true,
+    "door_gold": null,
+    "hijr_v": 0.353,
+    "corner_px": 5.8
+   },
+   {
+    "centre_m": [
+     -52.58,
+     -27.83,
+     13.73
+    ],
+    "rvec": [
+     1.5808776325419107,
+     -0.9679776275158455,
+     0.7651089471663355
+    ],
+    "tvec": [
+     -0.23913149698014194,
+     0.6748307042690441,
+     61.046265514364535
+    ],
+    "f": 1553.1999999999998,
+    "rms_px": 2.57,
+    "iou": 0.924,
+    "mizab_px": 25.3,
+    "mizab_facing": true,
+    "door_gold": null,
+    "hijr_v": 0.359,
+    "corner_px": 11.9
+   },
+   {
+    "centre_m": [
+     -52.24,
+     -28.78,
+     14.0
+    ],
+    "rvec": [
+     1.597453842412831,
+     -0.948507060690792,
+     0.7605955969759491
+    ],
+    "tvec": [
+     -0.3184033424199553,
+     0.6141737959102338,
+     61.25716829093691
+    ],
+    "f": 1553.1999999999998,
+    "rms_px": 2.84,
+    "iou": 0.918,
+    "mizab_px": 26.2,
+    "mizab_facing": true,
+    "door_gold": null,
+    "hijr_v": 0.359,
+    "corner_px": 9.7
+   },
+   {
+    "centre_m": [
+     -52.72,
+     -25.83,
+     15.33
+    ],
+    "rvec": [
+     1.5985554826294526,
+     -1.001341664701869,
+     0.7849833298207829
+    ],
+    "tvec": [
+     -0.2960601963483476,
+     0.7854778258555716,
+     60.671497665755446
+    ],
+    "f": 1553.1999999999998,
+    "rms_px": 2.92,
+    "iou": 0.92,
+    "mizab_px": 17.2,
+    "mizab_facing": true,
+    "door_gold": null,
+    "hijr_v": 0.35,
+    "corner_px": 21.5
+   },
+   {
+    "centre_m": [
+     -52.72,
+     -26.51,
+     14.1
+    ],
+    "rvec": [
+     1.5851265482182404,
+     -0.9818742330123861,
+     0.7857451411532204
+    ],
+    "tvec": [
+     -0.3058684323062664,
+     0.7351327838749615,
+     60.662705613567866
+    ],
+    "f": 1553.1999999999998,
+    "rms_px": 2.83,
+    "iou": 0.918,
+    "mizab_px": 22.9,
+    "mizab_facing": true,
+    "door_gold": null,
+    "hijr_v": 0.358,
+    "corner_px": 18.9
+   }
+  ],
+  "mizab_blob": [
+   869.0,
+   215.0
+  ],
+  "ref_image": "data/views/refs/cam0_mataf_low.png"
+ },
+ "cam1_mataf_wide": {
+  "chosen": {
+   "f": 1891.7,
+   "rvec": [
+    1.6994109,
+    0.8828852,
+    -0.6859627
+   ],
+   "tvec": [
+    15.2345,
+    1.4056,
+    86.7682
+   ],
+   "size": [
+    1920,
+    1080
+   ],
+   "centre_m": [
+    60.17,
+    -58.81,
+    26.15
+   ],
+   "distance_m": 84.1,
+   "f_kaaba_fit": 1971.6,
+   "f_kaaba_range": [
+    1654.9,
+    2397.8
+   ],
+   "f_selfcal": 1891.7,
+   "selfcal_frames": 23,
+   "selfcal_ptz_err": 0.0512,
+   "rms_px": 0.94,
+   "iou": 0.974,
+   "calibrated_utc": "2026-10-24T17:25:57+00:00",
+   "method": "Kaaba silhouette fit; focal length from pan/tilt/zoom self-calibration on matched thumbnails",
+   "orientation_fix_utc": "2026-10-26T22:19:14+00:00",
+   "orientation_fix": "half-turn of the 2026-10-24 pose (same silhouette exactly): the Hijr's white wall is on the Kaaba's left, as the half-turn puts it",
+   "previous": {
+    "rvec": [
+     0.986439,
+     -1.8987352,
+     1.405033
+    ],
+    "tvec": [
+     15.2345,
+     1.4056,
+     86.7682
+    ],
+    "centre_m": [
+     -60.17,
+     58.81,
+     26.15
+    ]
+   }
+  }
+ }
+}

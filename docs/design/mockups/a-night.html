@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Direction A · Layl al-Haram</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@200..700&family=Readex+Pro:wght@300..600&display=swap" rel="stylesheet" />
+<link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet" />
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="mockdata.js"></script>
+<script src="shared.js"></script>
+<style>
+  :root {
+    --ground: #0b1416; --panel: #101c1f; --raise: #162629; --line: rgba(236, 231, 220, 0.08); --line2: rgba(236, 231, 220, 0.16);
+    --text: #ece7dc; --mute: #8f9d9e; --gold: #c8a45c; --teal: #5fb7ae;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--ground); color: var(--text); font: 13.5px/1.45 "Readex Pro", system-ui, sans-serif; }
+  .num { font-family: Alexandria, sans-serif; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+  .ar { font-family: "Readex Pro", sans-serif; direction: rtl; color: var(--mute); }
+  header { display: flex; align-items: center; gap: 28px; padding: 12px 22px; border-bottom: 1px solid var(--line); }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand svg { width: 30px; height: 30px; }
+  .brand b { font-family: Alexandria; font-weight: 500; font-size: 17px; letter-spacing: -0.01em; display: block; }
+  .brand .ar { font-size: 12px; }
+  .live { display: flex; align-items: center; gap: 8px; padding: 5px 12px 5px 10px; border-radius: 999px; background: rgba(47, 179, 68, 0.12); color: #6fdc84; font-weight: 600; font-size: 12.5px; letter-spacing: 0.04em; }
+  .live i { width: 8px; height: 8px; border-radius: 50%; background: #2fb344; box-shadow: 0 0 0 4px rgba(47, 179, 68, 0.18); }
+  .facts { display: flex; gap: 26px; margin-left: 8px; }
+  .facts div span { display: block; color: var(--mute); font-size: 11.5px; }
+  .facts div b { font-family: Alexandria; font-weight: 400; font-size: 16px; }
+  .clock { margin-left: auto; text-align: right; }
+  .clock b { font-family: Alexandria; font-weight: 300; font-size: 28px; letter-spacing: -0.02em; }
+  .clock span { display: block; color: var(--mute); font-size: 11.5px; }
+  /* signature: prayer horizon */
+  .horizon { position: relative; height: 92px; margin: 0 22px; border-bottom: 1px solid var(--line); }
+  .horizon svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .wrap { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(360px, 1fr); gap: 18px; padding: 18px 22px; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; }
+  .panel h2 { margin: 0; font-family: Alexandria; font-weight: 500; font-size: 14.5px; letter-spacing: -0.005em; }
+  .ph { display: flex; align-items: baseline; justify-content: space-between; padding: 14px 16px 10px; gap: 12px; }
+  .ph small { color: var(--mute); }
+  .mapwrap { position: relative; height: 612px; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); }
+  #map { position: absolute; inset: 0; }
+  .mapkpi { position: absolute; left: 14px; bottom: 14px; display: flex; gap: 10px; }
+  .kpi { background: rgba(11, 20, 22, 0.86); border: 1px solid var(--line2); border-radius: 12px; padding: 10px 14px; min-width: 150px; backdrop-filter: blur(6px); }
+  .kpi span { color: var(--mute); font-size: 11.5px; display: block; }
+  .kpi b { font-family: Alexandria; font-weight: 300; font-size: 30px; line-height: 1.05; }
+  .kpi em { font-style: normal; color: var(--mute); font-size: 12px; }
+  .maptitle { position: absolute; left: 14px; top: 12px; background: rgba(11, 20, 22, 0.86); border: 1px solid var(--line2); border-radius: 10px; padding: 7px 12px; }
+  .maptitle b { font-family: Alexandria; font-weight: 500; }
+  .legend { position: absolute; right: 12px; top: 12px; display: flex; gap: 12px; background: rgba(11, 20, 22, 0.86); border: 1px solid var(--line2); border-radius: 10px; padding: 7px 12px; font-size: 12px; }
+  .legend i { display: inline-block; width: 16px; height: 4px; border-radius: 2px; margin-right: 5px; vertical-align: middle; }
+  .chart .grid { stroke: var(--line); } .chart .tick { fill: var(--mute); font-size: 10.5px; }
+  .chart .pline { stroke: rgba(200, 164, 92, 0.35); stroke-dasharray: 2 3; } .chart .ptext { fill: var(--gold); font-size: 10px; }
+  .chart .ln { stroke-width: 1.8; } .chart .ln0 { stroke: #e8384f; } .chart .ln1 { stroke: #f59f00; }
+  .chart .fzone { fill: rgba(200, 164, 92, 0.06); stroke: rgba(200, 164, 92, 0.35); stroke-dasharray: 4 4; } .chart .ftext { fill: var(--gold); font-size: 11px; }
+  .side { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+  .player { aspect-ratio: 16/9; border-radius: 10px; margin: 0 16px 16px; background: linear-gradient(160deg, #1a2a2c, #0a1213); position: relative; overflow: hidden; }
+  .player .tag { position: absolute; left: 10px; top: 10px; background: #e8384f; color: #fff; font-weight: 600; font-size: 11px; padding: 2px 8px; border-radius: 5px; letter-spacing: 0.06em; }
+  .player .note { position: absolute; inset: 0; display: grid; place-items: center; color: var(--mute); font-size: 12px; }
+  .cams { padding: 0 16px 8px; }
+  .cam { display: grid; grid-template-columns: 74px 1fr auto; gap: 12px; align-items: center; padding: 11px 0; border-top: 1px solid var(--line); }
+  .cam .heat { width: 74px; height: 42px; border-radius: 6px; background: radial-gradient(ellipse at 55% 60%, #ff5b3a 0%, #f5b400 28%, #2b8f7e 55%, #10201f 80%); opacity: 0.9; }
+  .cam .heat.off { background: repeating-linear-gradient(135deg, var(--raise) 0 6px, var(--panel) 6px 12px); opacity: 1; }
+  .cam b { display: block; font-weight: 500; }
+  .cam small { color: var(--mute); }
+  .cam .n { text-align: right; }
+  .cam .n b { font-family: Alexandria; font-weight: 300; font-size: 26px; line-height: 1; }
+  .cam .n small { display: block; }
+  .chip { display: inline-block; font-size: 10.5px; padding: 1px 7px; border-radius: 999px; margin-left: 6px; vertical-align: 1px; }
+  .chip.low { background: rgba(245, 159, 0, 0.14); color: #f5b13a; } .chip.wait { background: var(--raise); color: var(--mute); }
+  .slot { margin: 0 16px 16px; border: 1px dashed var(--line2); border-radius: 10px; padding: 12px 14px; color: var(--mute); }
+  .slot b { color: var(--text); font-weight: 500; }
+  .bottom { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(360px, 1fr); gap: 18px; padding: 0 22px 14px; }
+  footer { padding: 6px 22px 18px; color: var(--mute); font-size: 12px; display: flex; gap: 18px; }
+  .sample { color: var(--gold); }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <svg viewBox="0 0 40 40" aria-hidden="true"><g fill="none" stroke="#c8a45c" stroke-width="1.6"><rect x="9" y="9" width="22" height="22"/><rect x="9" y="9" width="22" height="22" transform="rotate(45 20 20)"/></g><circle cx="20" cy="20" r="3.2" fill="#c8a45c"/></svg>
+    <div><b>Haram Crowd Monitor</b><span class="ar">مرصد حشود المسجد الحرام</span></div>
+  </div>
+  <div class="live"><i></i>COLLECTING</div>
+  <div class="facts">
+    <div><span>Last frame</span><b id="lf"></b></div>
+    <div><span>Frames today</span><b id="ft"></b></div>
+    <div><span>Uptime today</span><b id="up"></b></div>
+    <div><span>Accepted today</span><b>cam0 0 · cam5 0</b></div>
+  </div>
+  <div class="clock"><b id="clk"></b><span id="hij"></span></div>
+</header>
+
+<div class="horizon"><svg id="hz"></svg></div>
+
+<div class="wrap">
+  <div>
+    <div class="mapwrap">
+      <div id="map"></div>
+      <div class="maptitle"><b>Roads around the Haram</b> <span class="ar">الحركة المرورية</span></div>
+      <div class="legend"><span><i style="background:#2fb344"></i>free</span><span><i style="background:#f59f00"></i>slow</span><span><i style="background:#e8384f"></i>congested</span><span><i style="background:#7a828c"></i>closed</span></div>
+      <div class="mapkpi">
+        <div class="kpi"><span>Within 1 km</span><b class="num" id="k1"></b><em> congested</em><br /><em id="k1s"></em></div>
+        <div class="kpi"><span>Within 3 km</span><b class="num" id="k3"></b><em> congested</em><br /><em id="k3s"></em></div>
+      </div>
+    </div>
+  </div>
+  <div class="side">
+    <div class="panel">
+      <div class="ph"><h2>Live broadcast</h2><small>Makkah Live · Saudi Quran TV</small></div>
+      <div class="player"><span class="tag">LIVE</span><div class="note">YouTube player</div></div>
+    </div>
+    <div class="panel">
+      <div class="ph"><h2>Crowd in the Mataf</h2><small class="sample">sample values</small></div>
+      <div class="cams" id="cams"></div>
+    </div>
+  </div>
+</div>
+
+<div class="bottom">
+  <div class="panel">
+    <div class="ph"><h2>Road congestion, last 24 h</h2><small>% of road length below half of free-flow speed · TomTom every 5 min</small></div>
+    <div id="tchart" style="padding: 0 10px 10px"></div>
+  </div>
+  <div class="panel">
+    <div class="ph"><h2>Alerts</h2><small>step 7</small></div>
+    <div class="slot"><b>No alert rules yet.</b> Crowd and road alerts will appear here, newest first, with the zone and the time they started.</div>
+  </div>
+</div>
+<footer><span>Counting only: no faces, no tracking. Frames are processed on the edge PC and deleted; only numbers and a small density heatmap leave it.</span><span>Times: Makkah (UTC+3)</span></footer>
+
+<script>
+  const st = M.status;
+  document.getElementById("lf").textContent = hm(st.last_frame_utc);
+  document.getElementById("ft").textContent = st.frames_today.toLocaleString();
+  document.getElementById("up").textContent = (st.uptime_today_pct ?? 99.4) + "%";
+  document.getElementById("clk").textContent = hm(new Date().toISOString());
+  document.getElementById("hij").textContent = "Hijri " + M.prayer.hijri_date + " · Friday";
+  const a1 = areaOf("r1km"), a3 = areaOf("r3km");
+  document.getElementById("k1").textContent = Math.round(a1.congested_pct) + "%";
+  document.getElementById("k3").textContent = Math.round(a3.congested_pct) + "%";
+  document.getElementById("k1s").textContent = "speed " + Math.round(a1.mean_level * 100) + "% of free flow";
+  document.getElementById("k3s").textContent = "speed " + Math.round(a3.mean_level * 100) + "% of free flow";
+
+  // cameras
+  const cams = [["cam0_mataf_low", "Mataf · low camera", "المطاف"], ["cam5_roof", "Mataf · roof camera", "السطح"], ["cam1_mataf_wide", "Mataf · wide camera", "المطاف"]];
+  document.getElementById("cams").innerHTML = cams.map(([id, name]) => {
+    const c = M.crowdSample[id];
+    const chip = id === "cam5_roof" ? '<span class="chip low">lower quality</span>' : !c ? '<span class="chip wait">waiting for reference</span>' : "";
+    return `<div class="cam"><div class="heat ${c ? "" : "off"}"></div><div><b>${name}${chip}</b><small>${c ? "updated " + hm(new Date(Date.now() - 4 * 60000).toISOString()) + " · zone mataf_ground" : "not counted yet"}</small></div>
+      <div class="n">${c ? `<b>${c.count.toLocaleString()}</b><small>people · ${c.density} / 10k px</small>` : '<b style="color:var(--mute)">–</b>'}</div></div>`;
+  }).join("");
+
+  // signature: prayer horizon, a rolling window: 20 h back, 4 h ahead (forecast zone always visible)
+  (function horizon() {
+    const svg = document.getElementById("hz"), W = svg.clientWidth;
+    const now = Date.now(), t0 = now - 20 * 3600000, t1 = now + 4 * 3600000;
+    const x = (t) => 8 + ((t - t0) / (t1 - t0)) * (W - 16);
+    let s = "";
+    const firstHour = Math.ceil(t0 / 10800000) * 10800000;
+    for (let t = firstHour; t <= t1; t += 10800000) s += `<line x1="${x(t)}" x2="${x(t)}" y1="56" y2="62" stroke="rgba(236,231,220,.25)"/><text x="${x(t)}" y="78" fill="#8f9d9e" font-size="10.5" text-anchor="middle">${hm(new Date(t).toISOString())}</text>`;
+    const pts = M.crowdSample.cam0_mataf_low.series.filter((p) => +new Date(p[0]) >= t0 && +new Date(p[0]) <= now);
+    for (const p of pts) {
+      const v = Math.min(1, p[1] / 1900), t = +new Date(p[0]);
+      s += `<rect x="${x(t)}" y="${50 - v * 26}" width="${Math.max(1.4, (W - 16) / 288 - 0.6)}" height="${v * 26}" fill="rgba(95,183,174,${0.22 + v * 0.55})"/>`;
+    }
+    s += `<rect x="${x(now)}" y="18" width="${x(t1) - x(now)}" height="32" fill="rgba(200,164,92,.05)" stroke="rgba(200,164,92,.4)" stroke-dasharray="4 4"/><text x="${x(now) + 10}" y="38" fill="#c8a45c" font-size="11">Forecast · 60 min ahead · step 7</text>`;
+    s += `<line x1="8" x2="${W - 8}" y1="50" y2="50" stroke="rgba(236,231,220,.18)"/>`;
+    for (const p of PRAYERS) for (const off of [-86400000, 0, 86400000]) {
+      const t = +new Date(M.prayer.times[p].utc) + off;
+      if (t < t0 || t > t1) continue;
+      const X = x(t);
+      s += `<line x1="${X}" x2="${X}" y1="10" y2="56" stroke="rgba(236,231,220,.35)" stroke-dasharray="${p === "sunrise" ? "2 3" : "0"}"/><text x="${X + 4}" y="15" fill="#ece7dc" font-size="11.5" font-weight="500">${PNAME[p]} <tspan fill="#8f9d9e" font-weight="400">${M.prayer.times[p].makkah}</tspan></text>`;
+    }
+    s += `<line x1="${x(now)}" x2="${x(now)}" y1="4" y2="62" stroke="#c8a45c" stroke-width="2"/><circle cx="${x(now)}" cy="50" r="4" fill="#c8a45c"/><text x="${x(now) - 6}" y="78" fill="#c8a45c" font-size="10.5" text-anchor="end">now</text>`;
+    svg.innerHTML = s;
+  })();
+
+  lineChart(document.getElementById("tchart"), trafficSeries(), { height: 150, unit: "%", prayers: true });
+  initMap(document.getElementById("map"), { base: "dark", land: "#0e1a1c", water: "#0c2b33", park: "#10231f", building: "#15252a", road: "#22363b",
+    label: "#7d8c8d", labelHalo: "#0b1416", ring: "rgba(200,164,92,.55)", casing: "#0b1416", accent: "#c8a45c", zoom: 13.5 });
+</script>
+</body>
+</html>

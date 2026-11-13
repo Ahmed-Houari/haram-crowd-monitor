@@ -1,0 +1,8 @@
+/* The colour key (LevelKey): a small swatch and the level word in the text colour; the estimate swatch is the twin's
+   light diagonal hatch on a neutral ground. */
+.lvkey { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 5px; font-size: 12.5px; line-height: 1.3;
+  color: var(--text); }
+.lvkey li { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.lvkey i { width: 13px; height: 13px; border-radius: 3px; flex: none; }
+.lvkey i.est { background: repeating-linear-gradient(135deg, rgba(236, 231, 220, 0.16) 0 3px, rgba(232, 236, 236, 0.7) 3px 4.5px);
+  box-shadow: inset 0 0 0 1px rgba(236, 231, 220, 0.25); }

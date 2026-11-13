@@ -1,0 +1,11 @@
+{
+  "note": "Held-out test prayers for v4 (user, 2026-10-29): never used in training. Both show prayer rows behind the Kaaba on cam0_mataf_low, cam1_mataf_wide and cam5_roof, and neither was in v3's training. scripts/finetune_dmcount.py drops them from training whatever --test says. Names are window files in data/finetune (live DVR prayers) and data/finetune_rec (recordings).",
+  "held_out": [
+    "2026-10-28-maghrib",
+    "screen_20261029T110452Z_DISPLAY1"
+  ],
+  "details": {
+    "2026-10-28-maghrib": "live DVR Maghrib 28 Oct 2026: 131 placed frames; rows behind the Kaaba cam0 57, cam1 20, cam5 20",
+    "screen_20261029T110452Z_DISPLAY1": "recording i2G0AnOuyKE, Isha, Sheikh Maher Al-Muaiqly, 13 Jumada al-Ula 1448 (night): 118 placed frames; rows behind the Kaaba cam0 18, cam1 46, cam5 52"
+  }
+}

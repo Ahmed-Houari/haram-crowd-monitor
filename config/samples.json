@@ -1,0 +1,32 @@
+{
+  "note": "Accuracy-metric samples (user request 2026-10-24): clean full-resolution frames of accepted readings, saved by the crowd collector (edge/extras.py AccuracySamples) to data/samples/acc_<view>_<UTC>.png with data/samples/acc_index.csv, for the manual counting tool (scripts/count_heads.py). Privacy: only data/samples/ (gitignored), never uploaded. The collector re-reads this file every minute: changes here need no restart. Periods are Makkah hours [from, to).",
+  "enabled": true,
+  "until_utc": "2026-11-21T00:00:00+00:00",
+  "max_total": 30,
+  "max_per_view": 12,
+  "max_per_view_period": 4,
+  "one_per_view_per_hour": true,
+  "youtube_only": true,
+  "periods_makkah": {
+    "day": [
+      6,
+      16
+    ],
+    "evening": [
+      16,
+      22
+    ],
+    "night": [
+      22,
+      6
+    ]
+  },
+  "m2": {
+    "note": "Ground-truth samples for the Mataf metric (user request 2026-10-25): clean full-resolution frames whose camera the view-independent metric found (ptz or anchor), saved by the crowd collector (edge/extras.py M2Samples) to data/samples/m2_<camera>_<UTC>.png with a sidecar .json (the frame's camera model and its m2 reading) and data/samples/m2_index.csv, for scripts/count_heads.py (manual head counts -> per-camera scale factors). Per camera and period (periods_makkah above) at most max_per_camera_period, one per camera per hour, only frames with >= min_area_m2 of Mataf floor in view.",
+    "enabled": true,
+    "until_utc": "2026-10-29T00:00:00+00:00",
+    "max_per_camera_period": 6,
+    "one_per_camera_per_hour": true,
+    "min_area_m2": 300
+  }
+}

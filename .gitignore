@@ -1,0 +1,63 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Secrets
+.env
+*cookies*.txt
+*.cookies
+
+# Local data and frames (privacy: never commit frames)
+data/
+*.jpg
+*.jpeg
+*.png
+*.bmp
+!docs/**/*.png
+*.webp
+*.gif
+!docs/**/*.gif
+
+# Video and the database (user 2026-11-03, GitHub prep: no footage, no readings DB)
+*.mp4
+*.mkv
+*.webm
+*.mov
+*.avi
+*.flv
+*.m4v
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# Density maps, eval results, logs
+*.npy
+*.npz
+*.pkl
+*.log
+
+# Model weights
+models/
+*.pth
+*.pt
+*.onnx
+*.safetensors
+*.ckpt
+*.h5
+
+# Editors / OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+
+# Node (dashboard, step 6)
+node_modules/
+dist/
+*.tsbuildinfo
+

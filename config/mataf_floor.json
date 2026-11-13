@@ -1,0 +1,13 @@
+{
+  "note": "The Mataf courtyard floor's edge (the Ottoman arcade's front columns), as [angle deg, distance m from the Kaaba's centre] in the Kaaba frame of edge/kaaba_geom.py (angle 0 = +x, the long walls' direction towards the Black Stone corner; 90 = +y, the door side). Measured 2026-10-27 on the reference frames of the two roof cameras (column bases back-projected to the floor; ~+-4 m): cam8_roof_b gives -63..35 deg, cam5_roof -114..176 deg. 35..134 deg (the north side, no roof view of it) and -114..-63 deg are interpolated, so the edge there is approximate. The far ring (edge/m2_metric.FAR) ends margin_m inside this line, so the arcade, its steps and the people inside it are left out.",
+  "margin_m": 4.0,
+  "edge": [
+    [-176.6, 90.1], [-171.4, 90.8], [-168.2, 92.8], [-162.4, 91.1], [-156.1, 91.7], [-149.8, 91.6], [-143.4, 91.5],
+    [-137.9, 92.1], [-134.3, 93.1], [-128.1, 95.3], [-123.5, 95.5], [-117.5, 95.2], [-114.2, 97.7],
+    [-62.9, 95.9], [-58.2, 90.3], [-50.3, 81.9], [-39.5, 79.3], [-24.7, 75.2], [-8.8, 73.4], [2.4, 73.5],
+    [15.0, 74.8], [27.2, 78.8], [35.1, 84.3],
+    [133.9, 93.2], [142.0, 96.3], [148.7, 97.3], [155.0, 97.4], [160.9, 96.1], [164.0, 95.8], [169.8, 93.3],
+    [176.1, 93.0]
+  ],
+  "measured": [[-176.6, -114.2], [-62.9, 35.1], [133.9, 176.1]]
+}

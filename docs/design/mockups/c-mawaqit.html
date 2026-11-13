@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Direction C · Mawaqit board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Overpass:wght@300..800&family=Noto+Kufi+Arabic:wght@400;600&display=swap" rel="stylesheet" />
+<link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet" />
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="mockdata.js"></script>
+<script src="shared.js"></script>
+<style>
+  :root { --ground: #0a1a15; --panel: #0f241d; --raise: #143026; --line: rgba(232, 236, 226, 0.09); --line2: rgba(232, 236, 226, 0.18);
+          --text: #eef0e6; --mute: #93a79c; --green: #23b07a; --gold: #d8b45f; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--ground); color: var(--text); font: 14px/1.4 Overpass, system-ui, sans-serif; }
+  .ar { font-family: "Noto Kufi Arabic"; direction: rtl; color: var(--mute); font-size: 12px; }
+  .num { font-variant-numeric: tabular-nums; }
+  header { display: grid; grid-template-columns: auto auto 1fr auto; align-items: center; gap: 24px; padding: 14px 24px; border-bottom: 1px solid var(--line); }
+  .brand b { font-weight: 800; font-size: 19px; letter-spacing: 0.01em; text-transform: uppercase; display: block; line-height: 1.1; }
+  .state { display: flex; align-items: center; gap: 10px; border: 1px solid rgba(35, 176, 122, 0.5); background: rgba(35, 176, 122, 0.1); border-radius: 8px; padding: 6px 12px; }
+  .state i { width: 9px; height: 9px; border-radius: 50%; background: var(--green); }
+  .state b { font-weight: 800; letter-spacing: 0.08em; color: #6fe0ae; font-size: 13px; }
+  .state span { color: var(--mute); font-size: 12.5px; }
+  .facts { display: flex; gap: 22px; justify-self: start; }
+  .facts span { display: block; color: var(--mute); font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .facts b { font-weight: 600; font-size: 16px; }
+  .clock { text-align: right; }
+  .clock b { font-weight: 300; font-size: 34px; line-height: 1; }
+  .clock span { display: block; color: var(--mute); font-size: 12px; }
+  main { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 18px; padding: 18px 24px; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
+  .ph { display: flex; justify-content: space-between; align-items: baseline; padding: 14px 16px 8px; }
+  .ph h2 { margin: 0; font-size: 15px; font-weight: 700; letter-spacing: 0.01em; }
+  .ph small { color: var(--mute); }
+  table.board { width: 100%; border-collapse: collapse; }
+  .board th { text-align: right; font-weight: 600; font-size: 11.5px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--mute); padding: 6px 16px 8px; border-bottom: 1px solid var(--line2); }
+  .board th:first-child, .board td:first-child { text-align: left; }
+  .board td { padding: 0 16px; height: 62px; border-bottom: 1px solid var(--line); text-align: right; font-variant-numeric: tabular-nums; }
+  .board td .big { font-size: 26px; font-weight: 300; }
+  .board td small { display: block; color: var(--mute); font-size: 11.5px; }
+  .board .p { white-space: nowrap; width: 230px; } .board th { white-space: nowrap; } .board .p b { font-size: 16px; font-weight: 700; } .board .p .ar { display: inline-block; margin-left: 8px; }
+  .board tr.now td { background: rgba(35, 176, 122, 0.1); border-bottom-color: rgba(35, 176, 122, 0.35); }
+  .board tr.now .p b::after { content: "NOW"; margin-left: 10px; font-size: 10.5px; letter-spacing: 0.08em; color: #6fe0ae; border: 1px solid rgba(35, 176, 122, 0.6); border-radius: 4px; padding: 1px 6px; vertical-align: 2px; }
+  .board tr.next td { color: var(--gold); }
+  .board tr.next td small { color: rgba(216, 180, 95, 0.7); }
+  .board tr.past td { color: var(--mute); }
+  .cell-bar { display: inline-block; width: 64px; height: 6px; border-radius: 3px; background: var(--raise); margin-right: 10px; vertical-align: middle; overflow: hidden; }
+  .cell-bar i { display: block; height: 100%; }
+  .side { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+  .player { aspect-ratio: 16/9; margin: 0 16px 14px; border-radius: 8px; background: #050d0a; position: relative; }
+  .player .tag { position: absolute; left: 10px; top: 10px; background: #e8384f; color: #fff; font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.08em; }
+  .player .note { position: absolute; inset: 0; display: grid; place-items: center; color: var(--mute); font-size: 12px; }
+  .mapwrap { position: relative; height: 300px; margin: 0 16px 14px; border-radius: 8px; overflow: hidden; }
+  #map { position: absolute; inset: 0; }
+  .legend { display: flex; gap: 14px; padding: 0 16px 14px; font-size: 12px; color: var(--mute); }
+  .legend i { display: inline-block; width: 16px; height: 4px; border-radius: 2px; margin-right: 5px; vertical-align: middle; }
+  .lower { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 18px; padding: 0 24px 14px; }
+  .chart .grid { stroke: var(--line); } .chart .tick { fill: var(--mute); font-size: 10.5px; }
+  .chart .pline { stroke: rgba(216, 180, 95, 0.35); stroke-dasharray: 2 3; } .chart .ptext { fill: var(--gold); font-size: 10px; }
+  .chart .ln { stroke-width: 2; } .chart .ln0 { stroke: #e8384f; } .chart .ln1 { stroke: #f59f00; }
+  .slot { margin: 0 16px 16px; border: 1px dashed var(--line2); border-radius: 8px; padding: 12px 14px; color: var(--mute); }
+  .slot b { color: var(--text); }
+  footer { padding: 4px 24px 18px; color: var(--mute); font-size: 12px; }
+  .maplibregl-ctrl-attrib { background: rgba(10, 26, 21, 0.8) !important; color: var(--mute); } .maplibregl-ctrl-attrib a { color: var(--mute); }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><b>Haram Crowd Monitor</b><span class="ar">مرصد حشود المسجد الحرام</span></div>
+  <div class="state"><i></i><b>COLLECTING</b><span id="lf"></span></div>
+  <div class="facts">
+    <div><span>Frames today</span><b class="num" id="ft"></b></div>
+    <div><span>Uptime today</span><b class="num" id="up"></b></div>
+    <div><span>Accepted</span><b class="num">cam0 0 · cam5 0</b></div>
+  </div>
+  <div class="clock"><b class="num" id="clk"></b><span id="hij"></span></div>
+</header>
+<main>
+  <div class="panel">
+    <div class="ph"><h2>Today by prayer period</h2><small>crowd: average people per camera zone (sample) · roads: % congested</small></div>
+    <table class="board" id="board"></table>
+  </div>
+  <div class="side">
+    <div class="panel"><div class="ph"><h2>Live broadcast</h2><small>Saudi Quran TV</small></div><div class="player"><span class="tag">LIVE</span><div class="note">YouTube player</div></div></div>
+    <div class="panel"><div class="ph"><h2>Roads around the Haram</h2><small id="poll"></small></div><div class="mapwrap"><div id="map"></div></div>
+      <div class="legend"><span><i style="background:#2fb344"></i>free</span><span><i style="background:#f59f00"></i>slow</span><span><i style="background:#e8384f"></i>congested</span><span><i style="background:#7a828c"></i>closed</span><span>dashed: 1 km / 3 km</span></div></div>
+  </div>
+</main>
+<div class="lower">
+  <div class="panel"><div class="ph"><h2>Road congestion, last 24 h</h2><small>% of road length below half of free-flow speed</small></div><div id="tchart" style="padding:0 10px 10px"></div></div>
+  <div class="panel"><div class="ph"><h2>Alerts</h2><small>step 7</small></div><div class="slot"><b>No alert rules yet.</b> Alerts will list zone, level and start time.</div></div>
+</div>
+<footer>Counting only: no faces, no tracking. Frames are processed on the edge PC and deleted; only numbers and a small density heatmap leave it. Times: Makkah (UTC+3).</footer>
+<script>
+  const st = M.status;
+  document.getElementById("lf").textContent = "last frame " + hm(st.last_frame_utc);
+  document.getElementById("ft").textContent = st.frames_today.toLocaleString();
+  document.getElementById("up").textContent = (st.uptime_today_pct ?? 99.4) + "%";
+  document.getElementById("clk").textContent = hm(new Date().toISOString());
+  document.getElementById("hij").textContent = "Friday · " + M.prayer.hijri_date + " AH";
+  document.getElementById("poll").textContent = "TomTom " + hm(M.traffic.poll_utc);
+  // signature: the prayer-period board
+  const T = M.prayer.times, now = Date.now();
+  const bounds = [["fajr", "sunrise"], ["sunrise", "dhuhr"], ["dhuhr", "asr"], ["asr", "maghrib"], ["maghrib", "isha"], ["isha", "fajr"]];
+  const sampleAt = (id, t0, t1) => {
+    const v = M.crowdSample[id].series.filter((p) => +new Date(p[0]) >= t0 && +new Date(p[0]) < t1).map((p) => p[1]);
+    return v.length ? Math.round(v.reduce((a, b) => a + b, 0) / v.length) : null;
+  };
+  const roads = (area, t0, t1) => {
+    const v = M.trafficSeries.filter((p) => p.area === area && +new Date(p.poll_utc) >= t0 && +new Date(p.poll_utc) < t1).map((p) => p.congested_pct);
+    return v.length ? Math.round(v.reduce((a, b) => a + b, 0) / v.length) : null;
+  };
+  const bar = (v, max, c) => `<span class="cell-bar"><i style="width:${Math.min(100, (100 * v) / max)}%;background:${c}"></i></span>`;
+  let rows = `<tr><th>Period</th><th>Low camera</th><th>Roof camera</th><th>Wide cam.</th><th>Roads 1 km</th><th>Roads 3 km</th></tr>`;
+  let sawNow = false;
+  for (const [a, b] of bounds) {
+    const t0 = +new Date(T[a].utc), t1 = a === "isha" ? +new Date(T.fajr.utc) + 86400000 : +new Date(T[b].utc);
+    const cls = now >= t0 && now < t1 ? "now" : sawNow ? "next" : "past";
+    if (cls === "now") sawNow = true;
+    const fut = cls === "next";
+    const c0 = fut ? null : sampleAt("cam0_mataf_low", t0, Math.min(t1, now)), c5 = fut ? null : sampleAt("cam5_roof", t0, Math.min(t1, now));
+    const r1 = fut ? null : roads("r1km", t0, t1), r3 = fut ? null : roads("r3km", t0, t1);
+    const cell = (v, max, c, unit = "") => fut ? `<span class="big">·</span><small>forecast</small>` : v == null ? `<span class="big" style="color:var(--mute)">–</span><small>no data</small>` : `${bar(v, max, c)}<span class="big">${v.toLocaleString()}${unit}</span>`;
+    rows += `<tr class="${cls}"><td class="p"><b>${PNAME[a]} → ${PNAME[b]}</b><span class="ar">${PAR[a]}</span><small>${T[a].makkah} – ${T[b].makkah}</small></td>
+      <td>${cell(c0, 2600, "#e9a23b")}</td><td>${cell(c5, 2600, "#e9a23b")}</td><td><span class="big" style="color:var(--mute)">–</span><small>waiting for reference</small></td>
+      <td>${cell(r1, 30, "#e8384f", "%")}</td><td>${cell(r3, 30, "#f59f00", "%")}</td></tr>`;
+  }
+  rows += `<tr class="next"><td class="p"><b>Next 60 min</b><small>forecast · step 7</small></td><td colspan="5" style="text-align:left;color:var(--gold)">Forecast of crowd per zone and road congestion will fill this row.</td></tr>`;
+  document.getElementById("board").innerHTML = rows;
+  lineChart(document.getElementById("tchart"), trafficSeries(), { height: 140, unit: "%", prayers: true });
+  initMap(document.getElementById("map"), { base: "dark", land: "#0c1d17", water: "#0b2c2c", park: "#0f2a1f", building: "#13281f", road: "#1f3a2f",
+    label: "#7d9688", labelHalo: "#0a1a15", ring: "rgba(216,180,95,.55)", casing: "#0a1a15", accent: "#d8b45f", zoom: 13.1 });
+</script>
+</body>
+</html>

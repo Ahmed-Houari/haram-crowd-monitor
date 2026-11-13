@@ -1,0 +1,412 @@
+{
+  "enabled": false,
+  "kaaba_fit": false,
+  "anchor": true,
+  "note": "View-independent metric (people per m^2 on the Mataf floor, edge/m2_pipeline.py). Since 2026-10-26 ~19:05 Makkah it is produced by the live shot service (scripts/live_shot.py, every 1-2 s, any shot: calibrated cameras, registration against the panorama bank, tracking, prayer rows); 'enabled' is the crowd collector's own m2 path, off since then (it ran every 15 s from 2026-10-24 ~23:05). Read at start. kaaba_fit: also fit a free camera to the Kaaba's silhouette (off). anchor: fit rotation + focal length at the calibrated positions when the Kaaba is in view. trace_memory: tracemalloc diagnostics in the crowd collector.",
+  "trace_memory": true,
+  "correction": {
+    "h0": 5.17,
+    "k": 1.96,
+    "camera_factor": {
+      "cam0_mataf_low": 1.0,
+      "cam1_mataf_wide": 1.0,
+      "cam5_roof": 1.5,
+      "cam8_roof_b": 1.5
+    },
+    "source": {
+      "sba": {
+        "h0": 6.42,
+        "k": 1.96,
+        "since_utc": "2026-10-27T10:20:00+00:00",
+        "note": "SBA's 720p stream (fallback only) finds fewer people than YouTube 1080p: ring 'all' 0.82 of YouTube on 61 simultaneous same-camera pairs (55 cam0_mataf_low, 6 cam1_mataf_wide); this curve brings it to 1.05 (p10-p90 0.69-1.21). Applied by user decision 2026-10-27; SBA readings then join the main series (edge/m2_pipeline.g_for, scripts/live_shot.db_source)."
+      }
+    },
+    "since_utc": "2026-10-26T16:05:00+00:00",
+    "note": "Live correction (edge/m2_metric.load_correction): corrected = raw / (max(g(head px), 0.2) x camera_factor). g = 1 - exp(-(h/h0)^k), the share of people DM-Count finds at head width h, fitted on 7,185 same-camera zoom pairs (scripts/zoom_calib.py). Absolute level from ground truth (2026-10-26, prayer rows: row spacing x spacing in the row, scripts/rows_truth.py, scripts/gt_compare.py): at 9-12 px heads raw DM-Count is within 0.5-1.17x of it, so the low and wide cameras get no factor; the roof reads 1.5x them on the same floor after g (same-floor sector pairs), so its readings are divided by 1.5 (DM-Count on 3x tiles gives the same roof level). Prayer rows on the roof: edge/prayer_rows.py. Before: h0 6.5, k 1.2, no factors. cam8_roof_b (calibrated 2026-10-26 from saved Maghrib frames: 158 m out, 77 m up, heads 3-4 px like the roof): 1.5 like the roof, provisional until its same-floor sector pairs (scripts/zoom_calib.py) confirm it."
+  },
+  "shadow": {
+    "enabled": false,
+    "weights": "qnrf_ft3",
+    "correction": null,
+    "camera_factor": null,
+    "source": {
+      "sba": {
+        "h0": 2.34,
+        "k": 1.96
+      }
+    },
+    "approx": {
+      "table_ratio": [
+        0.1413,
+        0.2727,
+        0.3596,
+        0.4651,
+        0.5462,
+        0.6249,
+        0.7011,
+        0.7609,
+        0.8537,
+        0.9289,
+        0.9933,
+        1.1075
+      ],
+      "table_head": [
+        2.64,
+        3.07,
+        3.42,
+        3.64,
+        4.06,
+        4.48,
+        5.43,
+        5.65,
+        7.39,
+        7.99,
+        7.99,
+        9.6
+      ],
+      "bias": 0.786
+    },
+    "since_utc": "2026-10-30 12:41:47",
+    "note": "v3 as the shadow next to live v4 + fixes (user 2026-10-30: before / after on the same frames, crowd_m2_shadow). Turn off when the comparison is done."
+  },
+  "live_model": {
+    "enabled": true,
+    "use": "v4",
+    "since_utc": "2026-10-30 12:41:47",
+    "note": "The Mataf metric's model: 'use' picks live_model_<use> (one setting to switch back: \"use\": \"v3\", then stop.bat / start.bat). edge/m2_metric.live_model_config merges it."
+  },
+  "live_model_v3": {
+    "weights": "qnrf_ft3",
+    "source": {
+      "sba": {
+        "h0": 2.34,
+        "k": 1.96
+      }
+    },
+    "approx": {
+      "table_ratio": [
+        0.1413,
+        0.2727,
+        0.3596,
+        0.4651,
+        0.5462,
+        0.6249,
+        0.7011,
+        0.7609,
+        0.8537,
+        0.9289,
+        0.9933,
+        1.1075
+      ],
+      "table_head": [
+        2.64,
+        3.07,
+        3.42,
+        3.64,
+        4.06,
+        4.48,
+        5.43,
+        5.65,
+        7.39,
+        7.99,
+        7.99,
+        9.6
+      ],
+      "bias": 0.786
+    },
+    "refit": {
+      "sba": {
+        "pairs": 108,
+        "raw_sba_over_yt": 0.956,
+        "by_head": {
+          "2-3": 0.617,
+          "3-4": 0.897,
+          "4-5": 1.002,
+          "5-6": 1.029,
+          "6-8": 0.935,
+          "8-10": 0.916,
+          "10-13": 0.948,
+          "13-17": 0.876,
+          "17-25": 0.983
+        },
+        "h0": 2.34,
+        "k": 1.96,
+        "after_fit_per_pair": [
+          1.0,
+          0.828,
+          1.18
+        ]
+      },
+      "approx": {
+        "old": {
+          "frames": 147,
+          "bands": 561,
+          "table_ratio": [
+            0.0981,
+            0.2578,
+            0.3582,
+            0.4511,
+            0.5068,
+            0.5502,
+            0.614,
+            0.6835,
+            0.7487,
+            0.8066,
+            0.8991,
+            1.0773
+          ],
+          "table_head": [
+            3.14,
+            3.21,
+            3.57,
+            3.78,
+            4.18,
+            4.18,
+            4.83,
+            5.6,
+            6.98,
+            7.15,
+            9.42,
+            9.85
+          ],
+          "bias": 1.7,
+          "approx_over_calibrated_after_bias": [
+            0.712,
+            0.187,
+            1.783
+          ]
+        },
+        "new": {
+          "frames": 162,
+          "bands": 565,
+          "table_ratio": [
+            0.1413,
+            0.2727,
+            0.3596,
+            0.4651,
+            0.5462,
+            0.6249,
+            0.7011,
+            0.7609,
+            0.8537,
+            0.9289,
+            0.9933,
+            1.1075
+          ],
+          "table_head": [
+            2.64,
+            3.07,
+            3.42,
+            3.64,
+            4.06,
+            4.48,
+            5.43,
+            5.65,
+            7.39,
+            7.99,
+            7.99,
+            9.6
+          ],
+          "bias": 0.786,
+          "approx_over_calibrated_after_bias": [
+            1.0,
+            0.446,
+            1.786
+          ]
+        }
+      }
+    },
+    "note": "v3 (models/DM-Count_QNRF_ft3.pth), live 2026-10-29 01:46:54 to 2026-10-30; SBA curve and approximate table refitted for it (scripts/shadow_refit.py --weights qnrf_ft3)."
+  },
+  "live_model_v4": {
+    "weights": "qnrf_v4",
+    "source": {
+      "sba": {
+        "h0": 2.34,
+        "k": 1.96
+      }
+    },
+    "approx": {
+      "table_ratio": [
+        0.1413,
+        0.2727,
+        0.3596,
+        0.4651,
+        0.5462,
+        0.6249,
+        0.7011,
+        0.7609,
+        0.8537,
+        0.9289,
+        0.9933,
+        1.1075
+      ],
+      "table_head": [
+        2.64,
+        3.07,
+        3.42,
+        3.64,
+        4.06,
+        4.48,
+        5.43,
+        5.65,
+        7.39,
+        7.99,
+        7.99,
+        9.6
+      ],
+      "bias": 0.786
+    },
+    "fixes": {
+      "near_wall_weights": "qnrf_ft3",
+      "near_wall_m": 4.0,
+      "far_in_prayer": true,
+      "stopped_rows_m2": 1.2
+    },
+    "speed": true,
+    "save_prayer_pairs": true,
+    "note": "v4 (models/DM-Count_QNRF_v4.pth, prayer rows, live DVR + recordings) with edge/m2_fill.py's fixes: within 4 m of the walls max(v4, v3 on a crop around the Kaaba); during prayer the inner ring directly behind the Kaaba from the near side when it reads under 0.8x, and 'stopped_rows_m2' (0 = off): stopped speed sectors where v4 sees people read at least that (1.2, fitted to the rows labels on 31 Oct's saved 1 s prayer pairs). 'source' (SBA head-size curve) and 'approx' are v3's until refitted for v4 (scripts/shadow_refit.py --weights qnrf_v4 --section live_model_v4). 'speed': the tawaf speed sensor (edge/tawaf_speed.py) gives walking ring sectors their density. 'save_prayer_pairs': its 1 s pairs from prayer windows saved to data/samples/speed_pairs (offline tests; not deleted automatically)."
+  },
+  "live_model_v4_candidate": {
+    "weights": "qnrf_v4",
+    "source": {
+      "sba": {
+        "h0": 2.76,
+        "k": 1.96
+      }
+    },
+    "approx": {
+      "table_ratio": [
+        0.1568,
+        0.2744,
+        0.3679,
+        0.4447,
+        0.5444,
+        0.656,
+        0.7843,
+        0.883,
+        0.9804,
+        1.0729,
+        1.1684,
+        1.3258
+      ],
+      "table_head": [
+        2.48,
+        2.79,
+        3.33,
+        3.56,
+        3.9,
+        4.43,
+        5.29,
+        5.86,
+        7.61,
+        7.93,
+        8.09,
+        9.96
+      ],
+      "bias": 0.749
+    },
+    "refit": {
+      "sba": {
+        "pairs": 88,
+        "raw_sba_over_yt": 0.919,
+        "by_head": {
+          "2-3": 0.598,
+          "3-4": 0.826,
+          "4-5": 0.921,
+          "5-6": 0.996,
+          "6-8": 0.956,
+          "8-10": 0.969,
+          "10-13": 1.012,
+          "13-17": 0.97
+        },
+        "h0": 2.76,
+        "k": 1.96,
+        "after_fit_per_pair": [
+          1.021,
+          0.765,
+          1.204
+        ]
+      },
+      "approx": {
+        "old": {
+          "frames": 657,
+          "bands": 2515,
+          "table_ratio": [
+            0.1652,
+            0.2705,
+            0.343,
+            0.4027,
+            0.4723,
+            0.529,
+            0.6006,
+            0.6869,
+            0.7675,
+            0.8579,
+            0.9445,
+            1.1372
+          ],
+          "table_head": [
+            3.1,
+            3.12,
+            3.4,
+            3.52,
+            4.1,
+            4.21,
+            4.94,
+            5.81,
+            7.41,
+            7.97,
+            9.67,
+            10.21
+          ],
+          "bias": 1.7,
+          "approx_over_calibrated_after_bias": [
+            0.728,
+            0.153,
+            1.815
+          ]
+        },
+        "new": {
+          "frames": 733,
+          "bands": 2516,
+          "table_ratio": [
+            0.1568,
+            0.2744,
+            0.3679,
+            0.4447,
+            0.5444,
+            0.656,
+            0.7843,
+            0.883,
+            0.9804,
+            1.0729,
+            1.1684,
+            1.3258
+          ],
+          "table_head": [
+            2.48,
+            2.79,
+            3.33,
+            3.56,
+            3.9,
+            4.43,
+            5.29,
+            5.86,
+            7.61,
+            7.93,
+            8.09,
+            9.96
+          ],
+          "bias": 0.749,
+          "approx_over_calibrated_after_bias": [
+            1.0,
+            0.481,
+            1.957
+          ]
+        }
+      }
+    },
+    "note": "v4's own SBA head-size curve and approximate table (scripts/shadow_refit.py --weights qnrf_v4 --section live_model_v4_candidate, 2026-11-01, 88 YouTube/SBA pairs of data/samples/dual2). NOT in use: live_model_v4 still carries v3's curve. To switch: copy \"source\" and \"approx\" into live_model_v4 (or set live_model \"use\" to \"v4_candidate\" with \"fixes\", \"speed\" and \"weights\" copied in), then stop.bat / start.bat."
+  }
+}

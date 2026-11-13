@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Direction B · Marble</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300..600&family=Reem+Kufi:wght@500;600&display=swap" rel="stylesheet" />
+<link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet" />
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="mockdata.js"></script>
+<script src="shared.js"></script>
+<style>
+  :root { --ground: #f3f1eb; --panel: #fffefb; --line: #e4ded1; --line2: #d5cdbd; --text: #1c2524; --mute: #687270;
+          --green: #0c6a4f; --green2: #e2eee8; --gold: #a07f3c; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--ground); color: var(--text); font: 13.5px/1.45 "Readex Pro", system-ui, sans-serif; }
+  .ar { direction: rtl; color: var(--mute); }
+  header { display: flex; align-items: center; gap: 26px; padding: 0 24px; height: 64px; background: var(--green); color: #f4f1e8; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand b { font-family: "Reem Kufi"; font-weight: 600; font-size: 19px; letter-spacing: 0.01em; display: block; line-height: 1.1; }
+  .brand span { font-size: 12px; color: rgba(244, 241, 232, 0.72); }
+  .status { display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.12); border-radius: 999px; padding: 5px 12px; font-weight: 600; font-size: 12.5px; }
+  .status i { width: 8px; height: 8px; border-radius: 50%; background: #7ee29a; }
+  .facts { display: flex; gap: 24px; }
+  .facts div span { display: block; font-size: 11.5px; color: rgba(244, 241, 232, 0.7); }
+  .facts div b { font-weight: 500; font-size: 15px; font-variant-numeric: tabular-nums; }
+  .clock { margin-left: auto; text-align: right; }
+  .clock b { font-weight: 300; font-size: 26px; font-variant-numeric: tabular-nums; }
+  .clock span { display: block; font-size: 11.5px; color: rgba(244, 241, 232, 0.72); }
+  .prayerbar { display: flex; gap: 0; background: var(--panel); border-bottom: 1px solid var(--line); padding: 0 24px; }
+  .prayerbar div { flex: 1; padding: 9px 0 9px 14px; border-left: 1px solid var(--line); display: flex; align-items: baseline; gap: 8px; }
+  .prayerbar div:first-child { border-left: 0; padding-left: 0; }
+  .prayerbar span { color: var(--mute); } .prayerbar b { font-weight: 500; font-variant-numeric: tabular-nums; }
+  .prayerbar .next { color: var(--green); } .prayerbar .next span { color: var(--green); }
+  .prayerbar .next b::after { content: " · next"; font-weight: 400; font-size: 12px; }
+  main { display: grid; grid-template-columns: 470px minmax(0, 1fr); gap: 18px; padding: 18px 24px; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; }
+  .ph { display: flex; justify-content: space-between; align-items: baseline; padding: 14px 16px 6px; }
+  .ph h2 { margin: 0; font-size: 15px; font-weight: 600; }
+  .ph small { color: var(--mute); }
+  #plan { display: block; margin: 0 auto; }
+  .camrow { display: grid; grid-template-columns: 14px 1fr auto; gap: 10px; align-items: center; padding: 10px 16px; border-top: 1px solid var(--line); }
+  .camrow i { width: 12px; height: 12px; border-radius: 3px; }
+  .camrow b { font-weight: 500; } .camrow small { color: var(--mute); display: block; }
+  .camrow .n { font-size: 24px; font-weight: 300; font-variant-numeric: tabular-nums; text-align: right; line-height: 1; }
+  .camrow .n small { font-size: 11.5px; }
+  .chip { font-size: 10.5px; padding: 1px 7px; border-radius: 999px; margin-left: 6px; }
+  .chip.low { background: #fbeccd; color: #8a5a00; } .chip.wait { background: #ece8de; color: var(--mute); }
+  .right { display: grid; grid-template-rows: auto auto; gap: 18px; min-width: 0; }
+  .maprow { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 18px; }
+  .mapwrap { position: relative; height: 440px; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); }
+  #map { position: absolute; inset: 0; }
+  .legend { position: absolute; left: 12px; top: 12px; display: flex; gap: 12px; background: rgba(255, 254, 251, 0.94); border: 1px solid var(--line); border-radius: 10px; padding: 6px 12px; font-size: 12px; }
+  .legend i { display: inline-block; width: 16px; height: 4px; border-radius: 2px; margin-right: 5px; vertical-align: middle; }
+  .kpis { display: flex; flex-direction: column; gap: 18px; }
+  .kpi { padding: 14px 16px; }
+  .kpi span { color: var(--mute); font-size: 12px; display: block; }
+  .kpi b { font-size: 40px; font-weight: 300; line-height: 1.05; font-variant-numeric: tabular-nums; }
+  .kpi em { font-style: normal; color: var(--mute); }
+  .kpi .bar { height: 6px; background: #ece8de; border-radius: 3px; margin-top: 8px; overflow: hidden; }
+  .kpi .bar i { display: block; height: 100%; background: var(--green); }
+  .lower { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 18px; }
+  .chart .grid { stroke: var(--line); } .chart .tick { fill: var(--mute); font-size: 10.5px; }
+  .chart .pline { stroke: rgba(12, 106, 79, 0.35); stroke-dasharray: 2 3; } .chart .ptext { fill: var(--green); font-size: 10px; }
+  .chart .ln { stroke-width: 2; } .chart .ln0 { stroke: #d6334a; } .chart .ln1 { stroke: #e08e00; }
+  .player { aspect-ratio: 16/9; margin: 0 16px 14px; border-radius: 10px; background: #1b2422; position: relative; }
+  .player .tag { position: absolute; left: 10px; top: 10px; background: #d6334a; color: #fff; font-weight: 600; font-size: 11px; padding: 2px 8px; border-radius: 5px; }
+  .player .note { position: absolute; inset: 0; display: grid; place-items: center; color: #8d9894; font-size: 12px; }
+  .slots { display: flex; gap: 10px; margin: 0 16px 14px; }
+  .slot { flex: 1; border: 1px dashed var(--line2); border-radius: 10px; padding: 10px 12px; color: var(--mute); font-size: 12.5px; }
+  .slot b { color: var(--text); font-weight: 500; display: block; }
+  footer { padding: 4px 24px 18px; color: var(--mute); font-size: 12px; }
+  .sample { color: var(--gold); }
+  .maplibregl-ctrl-attrib { font-size: 10px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <svg viewBox="0 0 40 40" width="32" height="32" aria-hidden="true"><g fill="none" stroke="#f4f1e8" stroke-width="1.6"><rect x="9" y="9" width="22" height="22"/><rect x="9" y="9" width="22" height="22" transform="rotate(45 20 20)"/></g></svg>
+    <div><b>Haram Crowd Monitor</b><span>مرصد حشود المسجد الحرام · live crowd and roads</span></div>
+  </div>
+  <div class="status"><i></i>Collecting</div>
+  <div class="facts">
+    <div><span>Last frame</span><b id="lf"></b></div>
+    <div><span>Frames today</span><b id="ft"></b></div>
+    <div><span>Uptime today</span><b id="up"></b></div>
+  </div>
+  <div class="clock"><b id="clk"></b><span id="hij"></span></div>
+</header>
+<div class="prayerbar" id="pb"></div>
+
+<main>
+  <div class="panel">
+    <div class="ph"><h2>Mataf now</h2><small class="sample">sample values · schematic</small></div>
+    <svg id="plan" width="438" height="372" viewBox="0 0 438 372"></svg>
+    <div id="camrows"></div>
+  </div>
+  <div class="right">
+    <div class="maprow">
+      <div class="mapwrap"><div id="map"></div>
+        <div class="legend"><span><i style="background:#2fb344"></i>free</span><span><i style="background:#f59f00"></i>slow</span><span><i style="background:#e8384f"></i>congested</span><span><i style="background:#7a828c"></i>closed</span><span style="color:var(--mute)">rings 1 km / 3 km</span></div>
+      </div>
+      <div class="kpis">
+        <div class="panel kpi"><span>Roads within 1 km</span><b id="k1"></b><em> congested</em><div class="bar"><i id="k1b"></i></div><span id="k1s" style="margin-top:8px"></span></div>
+        <div class="panel kpi"><span>Roads within 3 km</span><b id="k3"></b><em> congested</em><div class="bar"><i id="k3b"></i></div><span id="k3s" style="margin-top:8px"></span></div>
+        <div class="panel kpi" style="padding-bottom:12px"><span>Next 60 minutes</span><b style="font-size:20px;color:var(--mute)">Forecast · step 7</b><span>crowd and road outlook, by prayer time</span></div>
+      </div>
+    </div>
+    <div class="lower">
+      <div class="panel"><div class="ph"><h2>Road congestion, last 24 h</h2><small>% of road length below half of free-flow speed</small></div><div id="tchart" style="padding:0 10px 10px"></div></div>
+      <div class="panel"><div class="ph"><h2>Live broadcast</h2><small>Saudi Quran TV</small></div>
+        <div class="player"><span class="tag">LIVE</span><div class="note">YouTube player</div></div>
+        <div class="slots"><div class="slot"><b>Alerts · step 7</b>No alert rules yet.</div></div>
+      </div>
+    </div>
+  </div>
+</main>
+<footer>Counting only: no faces, no tracking. Frames are processed on the edge PC and deleted; only numbers and a small density heatmap leave it. Times: Makkah (UTC+3).</footer>
+
+<script>
+  const st = M.status;
+  document.getElementById("lf").textContent = hm(st.last_frame_utc);
+  document.getElementById("ft").textContent = st.frames_today.toLocaleString();
+  document.getElementById("up").textContent = (st.uptime_today_pct ?? 99.4) + "%";
+  document.getElementById("clk").textContent = hm(new Date().toISOString());
+  document.getElementById("hij").textContent = "Friday · Hijri " + M.prayer.hijri_date;
+  document.getElementById("pb").innerHTML = PRAYERS.map((p) => `<div class="${M.prayer.next && M.prayer.next.name === p ? "next" : ""}"><span>${PNAME[p]}</span><b>${M.prayer.times[p].makkah}</b><span class="ar">${PAR[p]}</span></div>`).join("");
+  const a1 = areaOf("r1km"), a3 = areaOf("r3km");
+  for (const [k, a] of [["k1", a1], ["k3", a3]]) {
+    document.getElementById(k).textContent = Math.round(a.congested_pct) + "%";
+    document.getElementById(k + "b").style.width = Math.max(2, a.congested_pct) + "%";
+    document.getElementById(k + "s").textContent = "average speed " + Math.round(a.mean_level * 100) + "% of free flow";
+  }
+  // signature: Mataf plan (schematic). Rings = Mataf floor; Kaaba; each camera's zone as a sector.
+  (function plan() {
+    const cx = 219, cy = 186, s = [];
+    s.push(`<circle cx="${cx}" cy="${cy}" r="170" fill="#faf8f2" stroke="#e4ded1"/>`);
+    for (const r of [140, 110, 80]) s.push(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#ece6d9" stroke-dasharray="${r === 110 ? "3 4" : "0"}"/>`);
+    const sector = (a0, a1, r0, r1, fill, op) => {
+      const p = (a, r) => [cx + r * Math.cos((a * Math.PI) / 180), cy + r * Math.sin((a * Math.PI) / 180)];
+      const [x0, y0] = p(a0, r1), [x1, y1] = p(a1, r1), [x2, y2] = p(a1, r0), [x3, y3] = p(a0, r0);
+      return `<path d="M${x0},${y0} A${r1},${r1} 0 0 1 ${x1},${y1} L${x2},${y2} A${r0},${r0} 0 0 0 ${x3},${y3}Z" fill="${fill}" fill-opacity="${op}" stroke="${fill}" stroke-opacity=".9"/>`;
+    };
+    s.push(sector(200, 340, 34, 150, "#d6563b", 0.42));  // cam0 low: north side (sample density high)
+    s.push(sector(20, 160, 34, 150, "#e3a21a", 0.38));   // cam5 roof: south side
+    s.push(sector(-20, 20, 34, 150, "#9aa39f", 0.18));   // cam1 wide: not counted yet
+    s.push(`<rect x="${cx - 17}" y="${cy - 20}" width="34" height="40" rx="2" fill="#1c2524" transform="rotate(-8 ${cx} ${cy})"/>`);
+    s.push(`<path d="M${cx - 14},${cy - 28} A22,22 0 0 1 ${cx + 16},${cy - 30}" fill="none" stroke="#1c2524" stroke-width="2.5" transform="rotate(-8 ${cx} ${cy})"/>`);
+    const tag = (x, y, t, n, c) => `<g><circle cx="${x}" cy="${y}" r="5" fill="${c}"/><text x="${x + 10}" y="${y - 2}" font-size="12" font-weight="600" fill="#1c2524">${t}</text><text x="${x + 10}" y="${y + 13}" font-size="11.5" fill="#687270">${n}</text></g>`;
+    s.push(tag(150, 70, "Low camera", "1,457 people", "#d6563b"));
+    s.push(tag(200, 318, "Roof camera", "2,093 people", "#e3a21a"));
+    s.push(tag(300, 132, "Wide camera", "no reference yet", "#9aa39f"));
+    s.push(`<text x="${cx}" y="${cy + 46}" font-size="11" fill="#687270" text-anchor="middle">Kaaba</text>`);
+    document.getElementById("plan").innerHTML = s.join("");
+  })();
+  const cams = [["cam0_mataf_low", "Mataf · low camera", "#d6563b"], ["cam5_roof", "Mataf · roof camera", "#e3a21a"], ["cam1_mataf_wide", "Mataf · wide camera", "#9aa39f"]];
+  document.getElementById("camrows").innerHTML = cams.map(([id, name, c]) => {
+    const d = M.crowdSample[id];
+    const chip = id === "cam5_roof" ? '<span class="chip low">lower quality</span>' : !d ? '<span class="chip wait">waiting for reference</span>' : "";
+    return `<div class="camrow"><i style="background:${c}"></i><div><b>${name}</b>${chip}<small>${d ? "zone mataf_ground · updated 4 min ago" : "captured automatically when it appears"}</small></div><div class="n">${d ? d.count.toLocaleString() + "<small>people</small>" : "–"}</div></div>`;
+  }).join("");
+  lineChart(document.getElementById("tchart"), trafficSeries(), { height: 150, unit: "%", prayers: true });
+  initMap(document.getElementById("map"), { base: "positron", land: "#efece4", water: "#c6dbdf", park: "#e0e7d6", building: "#e4ded1", road: "#fdfcf8",
+    label: "#6c7572", labelHalo: "#f3f1eb", ring: "rgba(12,106,79,.6)", casing: "#ffffff", accent: "#0c6a4f", zoom: 13.4 });
+</script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+{
+  "note": "Dashboard only (read by backend/app.py, never by the collectors). 3D Mataf twin: where each reference camera stands and what floor it sees. Units: scene units (0.116 per metre); ang = position around the Kaaba (rad, scene frame), r = distance from the Kaaba, h = height, hfov = horizontal field of view (rad), near/far = footprint depth on the floor, aim = turn away from the Kaaba (rad). Distances and heights from the calibrated cameras (2026-10-25: cam0 62 m / 15 m, cam1 84 m / 26 m; cam5 is 148 m out and 87 m up, cam8 (2026-10-26) 158 m out and 77 m up, both drawn on the outer ring's edge, 98 m out at 31 m); footprints schematic.",
+  "cameras": {
+    "cam0_mataf_low": {
+      "label": "Low camera",
+      "label_ar": "الكاميرا المنخفضة",
+      "color": "#ff6f52",
+      "ang": 0.837,
+      "r": 6.96,
+      "h": 1.77,
+      "hfov": 1.15,
+      "near": 1.2,
+      "far": 11.0,
+      "aim": 0.0
+    },
+    "cam1_mataf_wide": {
+      "label": "Wide camera",
+      "label_ar": "الكاميرا الواسعة",
+      "color": "#7fd0c4",
+      "ang": 2.688,
+      "r": 9.76,
+      "h": 3.03,
+      "hfov": 0.8,
+      "near": 2.5,
+      "far": 14.0,
+      "aim": -0.1
+    },
+    "cam5_roof": {
+      "label": "Roof camera",
+      "label_ar": "كاميرا السطح",
+      "color": "#d8b45f",
+      "ang": 3.692,
+      "r": 11.37,
+      "h": 3.6,
+      "hfov": 1.0,
+      "near": 6.0,
+      "far": 18.0,
+      "aim": 0.15
+    },
+    "cam8_roof_b": {
+      "label": "Roof camera B",
+      "label_ar": "كاميرا السطح ب",
+      "color": "#9fb4ff",
+      "ang": 0.147,
+      "r": 11.37,
+      "h": 3.6,
+      "hfov": 1.0,
+      "near": 6.0,
+      "far": 18.0,
+      "aim": 0.0
+    }
+  }
+}

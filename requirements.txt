@@ -1,0 +1,28 @@
+# PyTorch CUDA 13.0 build (RTX 5060 / Blackwell sm_120 needs CUDA 12.8+)
+--extra-index-url https://download.pytorch.org/whl/cu130
+torch==2.14.1+cu130
+torchvision==0.29.1+cu130
+
+numpy==2.5.4
+opencv-python==5.0.0.93
+python-dotenv==1.2.4
+scikit-learn==1.9.1
+matplotlib==3.11.2  # 2d plots, forecast report plot
+lightgbm==4.7.0  # step 7 forecast
+
+# Stream access: yt-dlp (+ JS challenge solver, uses Node.js) and a bundled FFmpeg binary
+yt-dlp[default]==2026.10.21.233146.dev0  # nightly; update often: pip install -U --pre "yt-dlp[default]"
+yt-dlp-ejs==0.8.0
+imageio-ffmpeg==0.6.0
+
+# Track B: local database, TomTom traffic tiles, prayer times
+SQLAlchemy==2.1.6
+requests==2.34.2
+mapbox-vector-tile==2.2.0  # decodes TomTom vector flow tiles (PBF)
+shapely==2.2.0
+protobuf==6.33.6
+pyclipper==1.4.0
+
+# Step 6: dashboard backend (FastAPI + WebSocket)
+fastapi==0.162.0
+uvicorn[standard]==0.54.0
